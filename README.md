@@ -1,13 +1,13 @@
 # Tattler
 
-Technology stack:
+Technology stack
 
-*Front-end:
+Front-end
 - Javascript, JSX
 - React
 - Node.js
 
-*Backend:
+Backend
 - Python
 - Flask Restful
 - PonyORM
