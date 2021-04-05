@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
@@ -14,7 +16,8 @@ api = Api(app, "/api")
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
-
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=8)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 
 @app.errorhandler(404)
 def page_not_found(e):

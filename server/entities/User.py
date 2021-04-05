@@ -12,3 +12,6 @@ class User(db.Entity):
     password = Required(str, max_len=256)
     created_at = Required(datetime, default=datetime.utcnow())
     updated_at = Required(datetime, default=datetime.utcnow())
+
+    def json(self):
+        return {'id': str(self.id), 'name': self.name, 'email': self.email, 'created_at': str(self.created_at)}

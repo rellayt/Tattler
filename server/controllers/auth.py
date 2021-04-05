@@ -3,39 +3,37 @@ from flask_restful import Resource
 from pony.orm import db_session
 import json
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
-
 from entities.User import User
-from middlewares.auth import register_validator
-from middlewares.user import user_fields_validator
+from middlewares.auth import register_verification, login_verification, register_fields_validation, \
+    login_fields_validation
 from helpers import destructure
 from utility.auth import hash_password
-from utility.parsers import user_parser
-
 
 class RegisterController(Resource):
-    @staticmethod
-    @user_fields_validator
-    @register_validator
+    @register_fields_validation
+    @register_verification
     @db_session
-    def post():
+    def post(self):
         try:
             [name, email, password] = destructure(json.loads(request.data), 'name', 'email', 'password')
             user = User(name=name, email=email, password=hash_password(password))
-            response = {'user': user_parser(user),
+            response = {'user': user.json(),
                         'access_token': create_access_token(identity=str(user.id)),
-                        'refresh_token': create_access_token(identity=str(user.id))}
+                        'refresh_token': create_refresh_token(identity=str(user.id))}
             return response, 200
         except Exception as e:
             print(e)
 
 
 class LoginController(Resource):
-    @staticmethod
-    @user_fields_validator
-    @db_session
-    def post():
+    @login_fields_validation
+    @login_verification
+    def post(self):
         try:
-            # [name, email, password] = destructure(json.loads(request.data), 'name', 'email', 'password')
-            return {'user': 'user', 'token': 'asd'}, 200
+            user = request.user
+            response = {'user': request.user.json(),
+                        'access_token': create_access_token(identity=str(user.id)),
+                        'refresh_token': create_refresh_token(identity=str(user.id))}
+            return response
         except Exception as e:
             print(e)
