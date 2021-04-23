@@ -7,11 +7,15 @@ from flask_restful import Api
 from connection import db
 from routes import load_routes
 from utility.error_handler import response_feedback
+from flask_cors import CORS
+
 
 db.generate_mapping(create_tables=True)
 
 app = Flask(__name__)
 api = Api(app, "/api")
+CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "https://localhost:3000/"}})
 
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')

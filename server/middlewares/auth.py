@@ -40,22 +40,20 @@ def register_fields_validation(f):
 
     return decoration
 
-
 def login_verification(f):
     @wraps(f)
     @db_session
     def decoration(*args, **kwargs):
         [login, password] = destructure(json.loads(request.data), 'login', 'password')
-
         user = User.select(lambda user: user.name.lower() is login.lower() or user.email.lower() is login.lower()).first()
 
         if user is None:
-            abort(409, verification_error='User not found')
+            abort(409, verification_error={'login': 'Invalid name or email'})
 
         match_password = verify_password(user.password, password)
 
         if not match_password:
-            abort(409, verification_error='Incorrect password')
+            abort(409, verification_error={'password': 'Incorrect password'})
 
         request.user = user
         return f(*args, **kwargs)

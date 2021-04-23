@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import RubikRegular from '../fonts/Rubik-Regular.ttf';
 
 export const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
     
     html {
       box-sizing: border-box;
@@ -10,9 +10,17 @@ export const GlobalStyle = createGlobalStyle`
     *, *::after, *::before {
       box-sizing: inherit;
     }
-    
+    @font-face {
+      font-family: RubikRegular;
+      font-style: normal;
+      font-weight: normal;
+      src: url(${RubikRegular}) format('truetype');
+    }
     body {
-      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      font-family: RubikRegular, 'Comic Sans MS';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     
     a, button {
