@@ -8,12 +8,12 @@ export const theme = {
     clearWater: '#abd6df',
     lightGrey: '#f7f8fa',
     input: '#fafafa',
-    grey: '#efefef',
+    grey: '#f0f0f0',
     darkGrey: '#737c8e',
     success: '#8FCB81',
     error: '#cb8581',
     warning: '#e1d888',
-    border: '#e8e8e8',
+    border: 'rgb(225,225,225)',
   },
   fontSize: {
     xxl: '40px',
@@ -21,10 +21,11 @@ export const theme = {
     l: '20px',
     m: '18px',
     s: '14px',
+    xs: '12px',
   },
   boxShadow: {
     auth: '0 2px 11px 3px rgb(0 0 0 / 8%)',
-    basic: '0 2px 6px 2px rgb(0 0 0 / 8%)',
+    basic: '0 3px 12px 1px rgb(0 0 0 / 10%)',
     sharp: '0 0 1px 1px rgb(0 0 0 / 45%)',
   },
 };

@@ -6,10 +6,10 @@ export const GlobalStyle = createGlobalStyle`
     html {
       box-sizing: border-box;
     }
-    
+     
     *, *::after, *::before {
       box-sizing: inherit;
-    }
+     }
     @font-face {
       font-family: RubikRegular;
       font-style: normal;

@@ -7,7 +7,7 @@ const Navigation = () => (
       <h1>Tattler</h1>
     </Logo>
     <StyledLink to="/home">Home</StyledLink>
-    <StyledLink to="/channel">Channels</StyledLink>
+    <StyledLink to="/channels">Channels</StyledLink>
     <StyledLink to="/messages">Messages</StyledLink>
   </Wrapper>
 );

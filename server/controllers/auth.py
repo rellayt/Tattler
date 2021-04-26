@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 from pony.orm import db_session
 import json
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
+from flask_jwt_extended import create_access_token, create_refresh_token
 from entities.User import User
 from middlewares.auth import register_verification, login_verification, register_fields_validation, \
     login_fields_validation

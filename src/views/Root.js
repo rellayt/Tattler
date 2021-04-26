@@ -11,6 +11,7 @@ import { AuthProvider } from '../providers/Auth';
 import Home from './Home';
 import { InnerWrapper } from '../components/templates/MainTemplate/MainTemplate.styles';
 import Profile from './Profile';
+import Channels from './Channels';
 
 const Root = () => {
   return (
@@ -27,7 +28,7 @@ const Root = () => {
                   </Route>
                   <Route path="/home">
                     <Home />
-                  </Route>{' '}
+                  </Route>
                   <Route path="/login">
                     <Login />
                   </Route>
@@ -36,6 +37,9 @@ const Root = () => {
                   </Route>
                   <Route path="/profile">
                     <Profile />
+                  </Route>
+                  <Route path="/channels">
+                    <Channels />
                   </Route>
                 </Switch>
               </InnerWrapper>

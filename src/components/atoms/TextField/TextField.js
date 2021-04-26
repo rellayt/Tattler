@@ -10,6 +10,9 @@ export const Input = styled(TextField)`
     font-size: ${({ theme: { fontSize } }) => fontSize.m};
     transform: translate(12px, 23px) scale(1);
   }
+  .MuiFormLabel-root {
+    font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  }
   .Mui-Focused,
   .MuiInputLabel-filled.MuiInputLabel-shrink {
     transform: translate(12px, 10px) scale(0.75);
@@ -39,5 +42,35 @@ export const Input = styled(TextField)`
     bottom: -25px;
     margin: 0 6px;
     font-weight: 600;
+  }
+  .MuiInput-underline:after {
+    border-bottom: 2px solid ${({ theme: { colors } }) => colors.grassGreen};
+  }
+  .MuiInputBase-input {
+    font-size: ${({ theme: { fontSize } }) => fontSize.m};
+  }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: ${({ theme: { colors } }) => colors.grassGreen};
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-width: 2px;
+    box-shadow: inset 0 0 4px 1px rgb(0 0 0 / 10%);
+    border-radius: 20px;
+  }
+  .MuiOutlinedInput-root {
+    transition: background 200ms ease-in;
+    background: ${({ theme: { colors } }) => colors.white};
+    border-radius: 20px;
+    &:focus-within,
+    &:hover {
+      background: ${({ theme: { colors } }) => colors.input};
+    }
+  }
+  .MuiOutlinedInput-root:hover > * {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  .MuiOutlinedInput-multiline {
+    padding: 14px;
   }
 `;
