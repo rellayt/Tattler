@@ -3,9 +3,10 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
   overflow-y: auto;
-  padding: 2px 15px;
+  padding: 5px 15px;
   background: ${({ theme: { colors } }) => colors.white};
-  //box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column-reverse;
 `;
 
 export const MessageWrapper = styled.div`
@@ -25,6 +26,9 @@ export const Message = styled.div`
 `;
 export const Content = styled.div`
   max-width: 44%;
+  text-overflow: ellipsis;
+  position: relative;
+  overflow: hidden;
   padding: 8px;
   box-shadow: inset 0 0 5px -4px rgba(0, 0, 0, 5);
 `;
@@ -37,21 +41,4 @@ export const Date = styled.div`
   margin: 1px 3px;
   color: ${({ theme: { colors } }) => colors.darkGrey};
   font-size: ${({ theme: { fontSize } }) => fontSize.xs};
-`;
-
-export const LoadingWrapper = styled.div`
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
-`;
-
-export const LoadingMessage = styled.div`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  border-radius: 15px;
-  margin: 6px 0;
 `;

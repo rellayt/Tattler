@@ -17,5 +17,11 @@ export const Card = styled(AuthWrapper)`
   }
   & > * {
     margin: 15px 0;
+    width: 325px;
+  }
+  @media (max-width: 480px) {
+    & > * {
+      width: auto;
+    }
   }
 `;

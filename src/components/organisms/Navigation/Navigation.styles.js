@@ -22,19 +22,30 @@ export const Logo = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 50px;
-
-  h1 {
-    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
-    color: ${({ theme: { colors } }) => colors.white};
-    text-align: right;
-    margin: 15px 20px 15px auto;
-    position: relative;
+`;
+export const Title = styled.h1`
+  font-size: ${({ theme: { fontSize } }) => fontSize.xl};
+  color: ${({ theme: { colors } }) => colors.white};
+  font-weight: 500;
+  margin: 15px 20px 15px auto;
+  position: relative;
+  &:before {
+    content: 'Tattler';
+  }
+    @media (max-width: 480px) {
+      font-weight: 600;
+        &:before {
+          content: 'T';
+        }
+    }
+    @media (max-width: 768px) {
+      margin: 7px auto;
+    }
   }
 `;
-
 const activeClassName = 'active-link';
 export const StyledLink = styled(NavLink).attrs({ activeClassName })`
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
   font-size: ${({ theme }) => theme.fontSize.l};
   color: ${({ theme }) => theme.colors.darkGrey};
@@ -59,8 +70,20 @@ export const StyledLink = styled(NavLink).attrs({ activeClassName })`
     transition: 250ms all;
     transform: scaleX(0);
   }
+  &:after {
+    content: ${({ text }) => `'${text}'`};
+  }
+  @media (max-width: 480px) {
+    justify-content: center;
+    padding-right: 0;
+    &:after {
+      content: ${({ text }) => `'${text.charAt(0)}'`};
+      font-size: ${({ theme: { fontSize } }) => fontSize.xl};
+    }
+  }
   &.${activeClassName} {
     color: ${({ theme }) => theme.colors.black};
+    pointer-events: none;
   }
   &.${activeClassName}:before, &:hover:before {
     background-color: ${({ theme }) => theme.colors.grassGreen};

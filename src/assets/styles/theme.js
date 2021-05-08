@@ -2,8 +2,9 @@ export const theme = {
   colors: {
     white: '#fdfdfd',
     black: '#111111',
-    grassGreen: '#7db46c',
-    darkGrassGreen: 'rgba(125,180,108,0.58)',
+    lowBlack: '#2f2f2f',
+    grassGreen: '#75ad64',
+    darkGrassGreen: 'rgba(125,180,108,0.25)',
     lightSky: '#e7ebe0',
     clearWater: '#abd6df',
     lightGrey: '#f7f8fa',
@@ -16,6 +17,7 @@ export const theme = {
     border: 'rgb(225,225,225)',
   },
   fontSize: {
+    xxxl: '50px',
     xxl: '40px',
     xl: '27px',
     l: '20px',

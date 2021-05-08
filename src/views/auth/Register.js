@@ -11,6 +11,7 @@ import { useFormik } from 'formik';
 import { RegisterSchema } from '../../schemas/RegisterSchema';
 import { register } from '../../store/actions/Auth';
 import { CircularLoading } from '../../components/atoms/CircularLoading/CircularLoading';
+import { Heading } from './Login.styles';
 
 const initialValues = {
   name: '',
@@ -28,7 +29,6 @@ const Register = () => {
     validationSchema: RegisterSchema,
     validateOnChange: false,
     onSubmit: async (values, actions) => {
-      console.log(values);
       try {
         const { name, email, password } = values;
         await register(dispatch, { name, email, password });
@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <Wrapper as="form" onSubmit={handleSubmit}>
       <Card>
-        <h2>Register</h2>
+        <Heading>Register</Heading>
         <Input
           label={'Name'}
           name={'name'}

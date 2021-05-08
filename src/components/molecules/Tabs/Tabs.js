@@ -1,26 +1,24 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { Tabs as MaterialTabs } from '@material-ui/core/';
-import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import { Wrapper } from './Tabs.styles';
+import { Tab } from '../../atoms/Tab/Tab';
+import { useParams } from 'react-router/';
+import { Link } from 'react-router-dom';
 
-const Tabs = () => {
-  const [value, setValue] = React.useState(0);
+const PublicChannelTabs = () => {
+  const { id } = useParams();
+  const [activeTab, setActiveTab] = React.useState(id - 1);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (e, activeTab) => setActiveTab(activeTab);
   return (
     <Wrapper>
-      <MaterialTabs value={value} onChange={handleChange}>
-        <Tab label="1" />
-        <Tab label="2" />
-        <Tab label="3" />
-      </MaterialTabs>
+      <Tabs value={activeTab} onChange={handleChange}>
+        <Tab label="1" value={0} to={'1'} component={Link} />
+        <Tab label="2" value={1} to={'2'} component={Link} />
+        <Tab label="3" value={2} to={'3'} component={Link} />
+      </Tabs>
     </Wrapper>
   );
 };
 
-Tabs.propTypes = {};
-
-export default Tabs;
+export default PublicChannelTabs;

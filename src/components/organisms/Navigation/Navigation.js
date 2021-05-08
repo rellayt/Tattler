@@ -1,14 +1,14 @@
 import React from 'react';
-import { Wrapper, Logo, StyledLink } from 'components/organisms/Navigation/Navigation.styles';
+import { Wrapper, Logo, StyledLink, Title } from 'components/organisms/Navigation/Navigation.styles';
 
 const Navigation = () => (
   <Wrapper>
     <Logo>
-      <h1>Tattler</h1>
+      <Title />
     </Logo>
-    <StyledLink to="/home">Home</StyledLink>
-    <StyledLink to="/channels">Channels</StyledLink>
-    <StyledLink to="/messages">Messages</StyledLink>
+    <StyledLink to="/home" text={'Home'} />
+    <StyledLink to="/channel" text={'Channels'} />
+    <StyledLink to="/messages" text={'Messages'} />
   </Wrapper>
 );
 

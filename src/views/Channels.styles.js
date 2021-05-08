@@ -1,23 +1,19 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
 export const Channel = styled.div`
   width: 75%;
   border-radius: 15px;
+  margin: 10px 0;
   display: grid;
   grid-template-rows: 60px minmax(45vh, 60vh) 110px;
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
   @media (max-width: 1440px) {
     width: 95%;
+    margin: 5px 0;
   }
   @media (max-width: 768px) {
     width: 100%;
+    margin: 0;
   }
 `;
 
@@ -39,8 +35,6 @@ export const Title = styled.div`
   color: ${({ theme: { colors } }) => colors.darkGrey};
   text-shadow: 0 0 1px ${({ theme: { colors } }) => colors.lightGrey};
   text-transform: uppercase;
-
-  //background: ${({ theme: { colors } }) => colors.white};
 `;
 
 export const Highlight = styled.span`

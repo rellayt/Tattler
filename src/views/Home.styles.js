@@ -9,11 +9,22 @@ export const Card = styled.div`
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: 90px 75px 1fr;
-  @media (max-width: 768px) {
-    width: 94vw;
-  }
+  margin: 20px;
   @media (max-width: 1440px) {
     width: 75vw;
+    padding: 30px 25px;
+  }
+  @media (max-width: 768px) {
+    width: 94vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 75px 1fr;
+    padding: 20px 15px;
+  }
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    height: 90%;
+    grid-template-rows: 55px 95px 1fr;
+    padding: 15px 10px;
   }
 `;
 
@@ -21,7 +32,7 @@ export const Heading = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.xxl};
   color: ${({ theme: { colors } }) => colors.grassGreen};
   text-shadow: 0 1px 0 ${({ theme: { colors } }) => colors.grey};
-  font-weight: 600;
+  font-weight: 500;
   justify-self: center;
   grid-column: 1/3;
 `;
@@ -39,11 +50,22 @@ export const UnderHeading = styled.div`
     border-radius: 10px;
     background: ${({ theme: { colors } }) => colors.grassGreen};
   }
+  @media (max-width: 768px) {
+    grid-column: 1/2;
+    margin: 0 auto;
+  }
 `;
 
 export const Content = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.m};
   grid-column: 1/2;
+  @media (max-width: 768px) {
+    grid-column: 1/2;
+    grid-row: 3/4;
+    p {
+      text-align: center;
+    }
+  }
 `;
 export const Paragraph = styled.p`
   margin: 5px;
@@ -61,10 +83,15 @@ export const GraphicSection = styled.div`
   grid-column: 2/3;
   grid-row: 2/4;
   padding: 0 0 0 15px;
+  @media (max-width: 768px) {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    padding: 0;
+    transform: translateY(-25px);
+  }
 `;
 export const Graphic = styled.div`
   transform: scale(0.8) rotateY(-20deg) rotateX(30deg) translateZ(30px);
-  //transform: scale(0.85) rotateY(-5deg) rotateX(5deg) translateZ(3px);
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
   transition: 0.5s ease;

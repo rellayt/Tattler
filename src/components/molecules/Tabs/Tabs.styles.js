@@ -4,10 +4,6 @@ export const Wrapper = styled.div`
   background: ${({ theme: { colors } }) => colors.white};
   border-radius: 15px 0 0 0;
   //box-shadow: inset 0 0 5px -1px rgba(0, 0, 0, 0.5);
-  .MuiButtonBase-root {
-    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
-    font-weight: 600;
-  }
   .PrivateTabIndicator-root-1 {
     background-color: ${({ theme: { colors } }) => colors.white};
   }
@@ -22,6 +18,9 @@ export const Wrapper = styled.div`
     transition: ease 300ms;
     color: ${({ theme: { colors } }) => colors.white};
     background: ${({ theme: { colors } }) => colors.grassGreen};
+  }
+  .PrivateTabIndicator-colorSecondary-7 {
+    background-color: ${({ theme: { colors } }) => colors.white};
   }
   .MuiTabs-flexContainer {
     height: 100%;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  //height: 100%;
   display: grid;
   grid-template-columns: 45% 55%;
   & > * {
@@ -29,7 +29,7 @@ export const ContentCard = styled(Card)`
 export const Heading = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
   color: ${({ theme: { colors } }) => colors.black};
-  font-weight: 600;
+  font-weight: 500;
   &::after {
     content: '';
     display: block;

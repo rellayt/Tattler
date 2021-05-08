@@ -4,10 +4,10 @@ import { Card } from '../../../views/Profile.styles';
 export const Wrapper = styled(Card)`
   grid-column: 1/2;
   grid-row: 1/3;
-  button:nth-child(2) {
-    margin-top: 10px;
-    padding: 10px;
-    height: 40px;
+  span:nth-child(2) {
+    //margin-top: 10px;
+    //padding: 10px;
+    //height: 40px;
   }
   button:nth-child(6) {
     margin-top: 15px;
@@ -29,9 +29,9 @@ export const AvatarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   grid-column: 1/3;
-  margin: 0 auto 30px auto;
+  margin: 20px auto 40px auto;
   button {
-    margin-bottom: 15px;
+    //margin-bottom: 15px;
   }
 `;
 
@@ -60,12 +60,11 @@ export const Avatar = styled.div`
 export const Heading = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
   color: ${({ theme: { colors } }) => colors.black};
-  font-weight: 600;
+  font-weight: 500;
   height: 40px;
   margin-top: auto;
   grid-column: 1/2;
 `;
-
 export const Lastlogin = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.s};
   color: ${({ theme: { colors } }) => colors.darkGrey};
@@ -74,11 +73,16 @@ export const Lastlogin = styled.div`
   height: 40px;
   grid-column: 2/3;
 `;
-
 export const Item = styled.div`
   display: flex;
   align-items: center;
   font-size: ${({ isBig, theme: { fontSize } }) => (isBig ? fontSize.xl : fontSize.l)};
   height: 35px;
   grid-column: 1/3;
+`;
+
+export const ButtonsWrapper = styled.div`
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
 `;

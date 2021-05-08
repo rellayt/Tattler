@@ -23,3 +23,7 @@ export const StyledLink = styled(NavLink)`
     border-bottom: 2px solid ${({ theme: { colors } }) => colors.grassGreen};
   }
 `;
+
+export const Heading = styled.h2`
+  font-weight: 500;
+`;

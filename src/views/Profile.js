@@ -6,20 +6,11 @@ import ProfileCard from '../components/organisms/ProfileCard/ProfileCard';
 
 const Profile = () => {
   const {
-    user: { name, email, created_at },
+    user: { id, name, email, created_at, avatar },
   } = useAuthState();
   return (
     <Wrapper>
-      {/*<ProfileCard>*/}
-      {/*  <FirstColumn>*/}
-      {/*    <Name>{name}</Name>*/}
-      {/*    {email} {created_at}*/}
-      {/*  </FirstColumn>*/}
-      {/*  <SecondColumn>*/}
-
-      {/*  </SecondColumn>*/}
-      {/*</ProfileCard>*/}
-      <ProfileCard name={name} email={email} date={created_at} />
+      <ProfileCard id={id} name={name} email={email} date={created_at} avatar={avatar} />
       <ContentCard>
         <Heading>Information</Heading>
       </ContentCard>

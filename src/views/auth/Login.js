@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Wrapper } from 'components/templates/Auth/Auth.styles';
-import { ForgotPassword, StyledLink } from './Login.styles';
+import { ForgotPassword, Heading, StyledLink } from './Login.styles';
 import { Button } from 'components/atoms/Button/Button';
 import { Input } from 'components/atoms/TextField/TextField';
 import { IconButton } from '@material-ui/core';
@@ -24,7 +24,7 @@ const Login = () => {
   const { values, handleBlur, touched, errors, handleReset, handleChange, handleSubmit, isValid } = useFormik({
     initialValues,
     validationSchema: LoginSchema,
-    validateOnChange: false,
+    validateOnChange: true,
     onSubmit: async (values, actions) => {
       try {
         const { login, password } = values;
@@ -42,13 +42,14 @@ const Login = () => {
       }
     },
   });
+  const handleKeyPress = (e) => e.key === 'Enter' ?? handleSubmit();
   const [showPassword, togglePassword] = useState(false);
   const handleTogglePassword = () => togglePassword(!showPassword);
 
   return (
     <Wrapper as="form" onSubmit={handleSubmit}>
       <Card>
-        <h2>Login</h2>
+        <Heading>Login</Heading>
         <Input
           label={'Name / E-mail'}
           name={'login'}
@@ -56,6 +57,7 @@ const Login = () => {
           value={values.login}
           onChange={handleChange}
           onBlur={handleBlur}
+          onKeyPress={handleKeyPress}
           disabled={loading}
           autoComplete="off"
           error={touched.login && Boolean(errors.login)}
@@ -70,6 +72,7 @@ const Login = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           disabled={loading}
+          onKeyPress={handleKeyPress}
           error={touched.password && Boolean(errors.password)}
           helperText={touched.password && errors.password}
           autoComplete="off"

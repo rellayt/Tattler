@@ -10,6 +10,12 @@ export const Wrapper = styled.div`
   grid-template-rows: 100px 1fr;
   background-color: ${({ theme: { colors } }) => colors.lightGrey};
   overflow-y: auto;
+  @media (max-width: 768px) {
+    grid-template-columns: 110px 1fr 0.5fr;
+  }
+  @media (max-width: 480px) {
+    grid-template-columns: 60px 1fr 0.5fr;
+  }
 `;
 
 export const InnerWrapper = styled.div`
@@ -19,5 +25,5 @@ export const InnerWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  //padding: 10px;
 `;

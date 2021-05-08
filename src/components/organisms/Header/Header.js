@@ -6,19 +6,14 @@ import { useAuthDispatch, useAuthState } from '../../../providers/Auth';
 import { logout } from '../../../store/actions/Auth';
 import { useHistory } from 'react-router-dom';
 
-export const Header = (props) => {
+export const Header = () => {
   const { user } = useAuthState();
-  const dispatch = useAuthDispatch();
   const history = useHistory();
 
-  const handleLogout = () => {
-    logout(dispatch);
-    history.push('/login');
-  };
   return (
     <Wrapper>
-      {user ? <SearchBar name={user.name} /> : null}
-      <HeaderAuth isLogged={Boolean(user)} handleLogout={handleLogout} />
+      {user ? <SearchBar history={history} name={user.name} placeholder={'Find users'} /> : null}
+      <HeaderAuth isLogged={Boolean(user)} />
     </Wrapper>
   );
 };

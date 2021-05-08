@@ -25,7 +25,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 20px;
+  padding: 0 20px;
   button {
     width: 85px;
     border-radius: 15px;

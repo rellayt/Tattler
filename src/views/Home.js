@@ -20,7 +20,7 @@ const Home = () => (
     <UnderHeading>Communication</UnderHeading>
     <Content>
       <Paragraph>is the key to achieving compatibility between people.</Paragraph>
-      <Paragraph>The application enables communication on three levels:</Paragraph>
+      <Paragraph>The application enables communication on different three levels:</Paragraph>
       <List>
         <Item>public channels</Item> <Item>group messages</Item> <Item>private messages</Item>
       </List>

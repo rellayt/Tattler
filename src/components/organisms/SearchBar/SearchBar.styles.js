@@ -5,15 +5,27 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 0 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
 `;
 
 export const StatusInfo = styled.div`
-  color: ${({ theme: { colors } }) => colors.darkGrey};
-  font-size: ${({ theme: { fontSize } }) => fontSize.l};
-  margin-right: 60px;
-
+  color: ${({ theme }) => theme.colors.darkGrey};
+  font-size: ${({ theme }) => theme.fontSize.l};
+  margin-right: 40px;
   p {
     margin: 5px;
+  }
+  @media (max-width: 768px) {
+    margin-right: 20px;
+  }
+  @media (max-width: 480px) {
+    margin-right: 10px;
   }
 `;
 
@@ -22,9 +34,10 @@ export const SearchWrapper = styled.div`
 `;
 
 export const SearchResults = styled.ul`
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   z-index: 1000;
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 10px;
   border-radius: 15px;
   list-style: none;
@@ -35,18 +48,30 @@ export const SearchResults = styled.ul`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
-  li {
-    font-weight: bold;
-    color: ${({ theme }) => theme.colors.darkGrey};
-    background-color: ${({ theme }) => theme.colors.white};
-    width: 100%;
-    padding: 20px 5px;
+  box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
+  pointer-events: ${({ noResult }) => (noResult ? 'none' : 'auto')};
+  a {
+    text-decoration: none;
   }
-  li:hover,
-  li:focus {
-    background-color: ${({ theme }) => theme.colors.lightPurple};
+`;
+
+export const SearchResultsItem = styled.li`
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.darkGrey};
+  background-color: ${({ theme, isHighlighted }) => (isHighlighted ? theme.colors.grey : theme.colors.white)};
+  width: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 5px 0;
+  font-size: ${({ theme: { fontSize } }) => fontSize.m};
+  transition: 100ms ease-in;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grey};
+    color: ${({ theme }) => theme.colors.black};
   }
-  li:not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.darkPurple};
-  }
+`;
+
+export const Name = styled.strong`
+  font-weight: 500;
 `;

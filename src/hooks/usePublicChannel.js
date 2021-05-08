@@ -1,30 +1,51 @@
-import { useCallback } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Socketio from 'socket.io-client';
+import { useAuthState } from '../providers/Auth';
 
-export const usePublicChannel = () => {
-  const sendMessage = async (channelId, message) => {
-    try {
-      const {
-        data: { messages },
-      } = await axios.post(`${process.env.REACT_APP_BASE_URL}/public_messages`, { channelId, message });
-      return messages;
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [typing, setTyping] = useState(false);
+  const { token } = useAuthState();
 
-  const getPublicMessages = useCallback(async (channel) => {
-    try {
-      const {
-        data: { messages },
-      } = await axios.get(`${process.env.REACT_APP_BASE_URL}/public_messages`, { params: { channel } });
-      return messages;
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
+  const SOCKET_URL = process.env.REACT_APP_WEB_SOCKET_CHANNEL_URL;
+  const socket = Socketio.connect(SOCKET_URL, {
+    extraHeaders: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const sendMessage = (message) => socket.emit('ADD_MESSAGE', { channelId, message });
+  const startTyping = () => socket.emit('START_TYPING', { channelId, userId });
+  const endTyping = () => socket.emit('END_TYPING', { channelId, userId });
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    socket.on('connect', () => socket.emit('JOIN', { channelId }));
+
+    socket.on(`MESSAGES_CHANNEL_${channelId}`, ({ messages }) => {
+      if (onConnected) onConnected.scrollToBottom();
+      setMessages(messages);
+      setTimeout(() => setLoading(false), 300);
+    });
+
+    socket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
+      console.log('Typing: ', typingUsers);
+      typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0] !== userId) ? setTyping(true) : setTyping(false);
+    });
+
+    socket.on('disconnect', () => console.log('Disconnect'));
+
+    return () => socket.disconnect();
+  }, [enabled, channelId, onConnected]);
+
   return {
+    messages,
+    loading,
+    typing,
+    startTyping,
+    endTyping,
     sendMessage,
-    getPublicMessages,
   };
 };
