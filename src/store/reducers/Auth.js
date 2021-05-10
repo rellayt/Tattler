@@ -13,6 +13,11 @@ export const initialState = {
 
 export const AuthReducer = (initialState, action) => {
   switch (action.type) {
+    case 'USER_UPDATE':
+      return {
+        ...initialState,
+        user: action.payload.user,
+      };
     case 'LOGIN_REQUEST':
       return {
         ...initialState,

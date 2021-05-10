@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Input } from '../../atoms/TextField/TextField';
-import { Wrapper } from '../../organisms/ProfileCard/ProfileCard.styles';
 
 const ProfileEdit = () => (
   <div>

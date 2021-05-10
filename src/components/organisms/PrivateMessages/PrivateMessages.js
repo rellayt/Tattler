@@ -1,17 +1,25 @@
 import React from 'react';
-import { Displayed, FindFriends, Heading, HeadingName, PrivateMessagesWrapper, Wrapper } from './PrivateMessages.styles';
+import { Displayed, FindFriends, Heading, HeadingName, Message, PrivateMessagesWrapper, Wrapper } from './PrivateMessages.styles';
 import PublicMessagesLoading from '../../molecules/PublicMessagesLoading/PublicMessagesLoading';
 import Typing from '../../molecules/Typing/Typing';
-import { Content, Date, Message, MessageWrapper, Name } from '../ChannelMessages/ChannelMessages.styles';
+import { AvatarWrapper, Content, Date, MessageWrapper, Name } from '../ChannelMessages/ChannelMessages.styles';
 import Moment from 'react-moment';
 import { isToday } from '../../../helpers/isToday';
 import NoAvatar from '../../atoms/NoAvatar/NoAvatar';
 import InfoIcon from '../../atoms/InfoIcon/InfoIcon';
 import { Skeleton } from '@material-ui/lab';
+import UserAvatar from '../../molecules/UserAvatar/UserAvatar';
+import { getAvatarPath } from '../../../helpers/getAvatarPath';
 
-const PrivateMessages = ({ privateMessagesData, id, active, users, typing: isTyping, anyChats }) => {
-  const loading = true;
-  // const isTyping = false;
+const PrivateMessages = ({
+  privateMessagesData: { messages, avatars },
+  id,
+  active,
+  roomParticipants,
+  loading,
+  typing: isTyping,
+  anyChats,
+}) => {
   return (
     <Wrapper active={active}>
       <Heading active={active}>
@@ -22,11 +30,25 @@ const PrivateMessages = ({ privateMessagesData, id, active, users, typing: isTyp
           </>
         ) : (
           <>
-            <NoAvatar size="xxxl" />
-            <HeadingName>{users[0]?.name}</HeadingName>
+            {roomParticipants.length === 1 && (
+              <>
+                {roomParticipants[0].avatar ? (
+                  <UserAvatar size={'60px'} path={getAvatarPath(roomParticipants[0].id)} />
+                ) : (
+                  <NoAvatar size="xxxl" />
+                )}
+                <HeadingName>{roomParticipants[0]?.name}</HeadingName>
+              </>
+            )}
+            {roomParticipants.length > 1 && (
+              <>
+                {/*{roomParticipants[0].avatar ? <UserAvatar size={'60px'} path={path} /> : <NoAvatar size="xxxl" />}*/}
+                <HeadingName>group</HeadingName>
+              </>
+            )}
           </>
         )}
-        <InfoIcon size={'xl'} path={`/profile/${users[0]?.id}`} />
+        <InfoIcon size={'xl'} path={`/profile/${roomParticipants[0]?.id}`} />
       </Heading>
       <PrivateMessagesWrapper>
         {loading ? (
@@ -34,12 +56,19 @@ const PrivateMessages = ({ privateMessagesData, id, active, users, typing: isTyp
         ) : (
           <>
             {isTyping ? <Typing /> : null}
-            {privateMessagesData.map(({ message, created_at, userId, name, roomId, displayed }, index) => {
+            {messages.map(({ message, created_at, userId, name, roomId, displayed }, index) => {
               return (
-                <MessageWrapper key={index}>
+                <MessageWrapper key={index} isMyMessage={id === userId}>
                   <Message name={`message${index}`} isMyMessage={id === userId}>
                     <Name>{userId === id ? 'You' : name}</Name>
                     <Content>{message}</Content>
+                    <AvatarWrapper>
+                      {avatars.find((avatar) => avatar.id === userId).avatar ? (
+                        <UserAvatar size={'27px'} path={getAvatarPath(userId)} />
+                      ) : (
+                        <NoAvatar size={'xl'} />
+                      )}
+                    </AvatarWrapper>
                     <Date>
                       <Moment format={isToday(created_at) ? 'HH:mm' : 'DD/MM HH:mm'}>{created_at}</Moment>
                     </Date>

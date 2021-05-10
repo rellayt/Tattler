@@ -19,8 +19,20 @@ class ImageController(Resource):
 			filename = os.path.join(app.config['MEDIA'], f'avatar_{user_id}.png')
 			user = User.get(id=user_id)
 			user.avatar = True
-			print(user.json())
 			file.save(filename)
-			return {'path': f'/media/{user_id}'}
+			return {'user': user.json()}
+		except Exception as e:
+			print(e)
+
+	@jwt_decode_user
+	def delete(self):
+		try:
+			user_id = request.user['id']
+			from src.main import app
+			path = os.path.join(app.config['MEDIA'], f'avatar_{user_id}.png')
+			os.remove(path)
+			user = User.get(id=user_id)
+			user.avatar = False
+			return {'user': user.json()}
 		except Exception as e:
 			print(e)

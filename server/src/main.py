@@ -46,5 +46,3 @@ if __name__ == '__main__':
 	db.generate_mapping(create_tables=True)
 	load_routes(api)
 	socketio.run(app)
-
-# app.run(debug=True)

@@ -4,11 +4,6 @@ import { Card } from '../../../views/Profile.styles';
 export const Wrapper = styled(Card)`
   grid-column: 1/2;
   grid-row: 1/3;
-  span:nth-child(2) {
-    //margin-top: 10px;
-    //padding: 10px;
-    //height: 40px;
-  }
   button:nth-child(6) {
     margin-top: 15px;
     grid-column: 1/3;
@@ -30,8 +25,11 @@ export const AvatarWrapper = styled.div`
   align-items: center;
   grid-column: 1/3;
   margin: 20px auto 40px auto;
-  button {
-    //margin-bottom: 15px;
+  .MuiCircularProgress-root {
+    color: ${({ theme: { colors } }) => colors.grassGreen};
+    width: 117px !important;
+    height: 117px !important;
+    margin: 15px 0;
   }
 `;
 

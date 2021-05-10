@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from '../components/templates/BasicWrapper';
-import { Heading, Content, Item, Name, SelectedProfileWrapper, LoadingWrapper } from './SelectedProfile.styles';
+import { Content, Heading, Item, LoadingWrapper, Name, SelectedProfileWrapper } from './SelectedProfile.styles';
 import NoAvatar from '../components/atoms/NoAvatar/NoAvatar';
 import { useParams } from 'react-router';
 import { useUser } from '../hooks/useUser';
@@ -11,6 +11,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { useRoom } from '../hooks/useRoom';
 import { Backdrop } from '../components/templates/Backdrop/Backdrop';
 import { CircularProgress } from '@material-ui/core';
+import UserAvatar from '../components/molecules/UserAvatar/UserAvatar';
 
 const SelectedProfile = ({ history }) => {
   const [user, setUser] = useState({});
@@ -19,6 +20,7 @@ const SelectedProfile = ({ history }) => {
   const { getUser } = useUser();
   const { createRoom } = useRoom({});
   const { id } = useParams();
+  const path = `${process.env.REACT_APP_API_URL}/media/${id}?t=${Date.now()}`;
 
   useEffect(() => {
     (async () => {
@@ -37,7 +39,7 @@ const SelectedProfile = ({ history }) => {
       const { id } = await createRoom({ isPrivate: true, userId: user.id });
       setTimeout(() => {
         setBackdropLoading(false);
-        history.push(`/messages/${id}`);
+        history.push(`/messages/r/${id}`);
       }, 400);
       console.log(id);
     }
@@ -61,8 +63,8 @@ const SelectedProfile = ({ history }) => {
           </>
         ) : (
           <>
-            <Heading>
-              <NoAvatar isProfile />
+            <Heading isAvatar={user.avatar}>
+              {user.avatar ? <UserAvatar hasBorder size={'135px'} path={path} /> : <NoAvatar isProfile />}
             </Heading>
             <Content>
               <Name>{user.name}</Name>

@@ -47,7 +47,7 @@ export const Heading = styled.div`
   justify-content: center;
   align-items: flex-end;
   div:first-child {
-    transform: translateY(85px);
+    transform: ${({ isAvatar }) => (isAvatar ? 'translateY(62px)' : 'translateY(85px)')};
   }
 `;
 

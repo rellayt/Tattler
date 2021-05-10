@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   pointer-events: ${({ active }) => (active ? 'none' : 'auto')};
   a {
     display: grid;
-    grid-template-columns: 17% 63% 14% 6%;
+    grid-template-columns: 19% 59% 15% 7%;
     grid-template-rows: 50% 50%;
     height: 70px;
   }
@@ -43,10 +43,6 @@ export const Avatar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 480px) {
-    //grid-column: none;
-    //grid-row: none;
-  }
 `;
 export const Name = styled.div`
   grid-column: 2/4;

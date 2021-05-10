@@ -1,6 +1,5 @@
 import React from 'react';
-import { Wrapper, ContentCard } from './Profile.styles';
-import { Heading } from './Profile.styles';
+import { ContentCard, Heading, Wrapper } from './Profile.styles';
 import { useAuthState } from '../providers/Auth';
 import ProfileCard from '../components/organisms/ProfileCard/ProfileCard';
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { Wrapper } from './Header.styles';
 import SearchBar from '../SearchBar/SearchBar';
 import HeaderAuth from '../../molecules/HeaderAuth/HeaderAuth';
-import { useAuthDispatch, useAuthState } from '../../../providers/Auth';
-import { logout } from '../../../store/actions/Auth';
+import { useAuthState } from '../../../providers/Auth';
 import { useHistory } from 'react-router-dom';
 
 export const Header = () => {

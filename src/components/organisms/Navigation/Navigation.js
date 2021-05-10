@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Logo, StyledLink, Title } from 'components/organisms/Navigation/Navigation.styles';
+import { Logo, StyledLink, Title, Wrapper } from 'components/organisms/Navigation/Navigation.styles';
 
 const Navigation = () => (
   <Wrapper>

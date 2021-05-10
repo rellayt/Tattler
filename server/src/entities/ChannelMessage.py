@@ -15,4 +15,4 @@ class ChannelMessage(db.Entity):
 
     def json(self):
         return {'id': str(self.id), 'message': self.message, 'created_at': str(self.created_at), 'from': {
-            'userId': str(self.fromUser.id), 'name': str(self.fromUser.name)}}
+            'userId': str(self.fromUser.id), 'name': str(self.fromUser.name), 'avatar': self.fromUser.avatar}}

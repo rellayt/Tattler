@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Channel = styled.div`
   width: 75%;
+  height: 45em;
   border-radius: 15px;
   margin: 10px 0;
   display: grid;
-  grid-template-rows: 60px minmax(45vh, 60vh) 110px;
+  grid-template-rows: 60px 1fr 15%;
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
   @media (max-width: 1440px) {
     width: 95%;

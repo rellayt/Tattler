@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
 import { MainTemplate } from 'components/templates/MainTemplate/MainTemplate';
 import { StylesProvider } from '@material-ui/core/styles';
 import { AuthProvider } from '../providers/Auth';

@@ -21,3 +21,7 @@ class Room(db.Entity):
 
     def json(self):
         return {'id': str(self.id), 'type': str(self.type)}
+
+    def get_type(self):
+        return {'type': str(self.type)}
+

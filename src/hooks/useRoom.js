@@ -4,7 +4,7 @@ import Socketio from 'socket.io-client';
 import { useEffect, useState } from 'react';
 
 export const useRoom = ({ enabled = false, roomId, userId }) => {
-  const [users, setUsers] = useState([]);
+  const [roomParticipants, setRoomParticipants] = useState([]);
 
   const [messages, setMessages] = useState([]);
   const [messagesLoading, setMessagesLoading] = useState(true);
@@ -38,15 +38,16 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
 
   useEffect(() => {
     socket.emit('JOIN');
-
     if (!enabled) return;
+
     socket.emit('JOIN_ROOM', { roomId });
-    socket.on(`ROOM_MESSAGES_${roomId}`, ({ messages }) => {
-      setMessages(messages);
+
+    socket.on(`ROOM_MESSAGES_${roomId}`, (data) => {
+      setMessages(data);
       setMessagesLoading(false);
     });
 
-    socket.on(`ROOM_USERS_${roomId}`, ({ users }) => setUsers(users));
+    socket.on(`ROOM_USERS_${roomId}`, ({ users }) => setRoomParticipants(users));
 
     socket.on(`TYPING_ROOM_${roomId}`, ({ id }) => (id && id !== userId ? setTyping(true) : setTyping(false)));
     return () => {
@@ -63,7 +64,7 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
     sendMessage,
     startTyping,
     endTyping,
-    users,
+    roomParticipants,
     socket,
   };
 };

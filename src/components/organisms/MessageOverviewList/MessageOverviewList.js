@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import MessageOverview from '../../molecules/MessageOverview/MessageOverview';
 import { Heading, Wrapper, LastMessages } from './MessageOverviewList.styles';
 import Skeleton from '@material-ui/lab/Skeleton';
+import AddIcon from '../../atoms/AddIcon/AddIcon';
 
-export const MessageOverviewList = ({ roomId: id, userId, socket }) => {
+export const MessageOverviewList = ({ roomId: id, userId, socket, setAnyChats, activeCreateRoom }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+
   socket.on(`ROOM_OVERVIEW_${userId}`, ({ overviewMessages }) => {
     setMessages(overviewMessages);
+    setAnyChats(overviewMessages.length > 0);
     setLoading(false);
   });
   return (
     <Wrapper>
-      <Heading />
+      <Heading>
+        <AddIcon active={activeCreateRoom} />
+      </Heading>
       <LastMessages>
         {loading ? (
           <>
@@ -24,7 +29,7 @@ export const MessageOverviewList = ({ roomId: id, userId, socket }) => {
           </>
         ) : (
           <>
-            {messages.map(({ names, userId, created_at, message, isYourMessage, displayed, roomId }, index) => {
+            {messages.map(({ names, userId, created_at, message, isYourMessage, displayed, roomId, avatar }, index) => {
               return (
                 <MessageOverview
                   key={index}
@@ -36,6 +41,7 @@ export const MessageOverviewList = ({ roomId: id, userId, socket }) => {
                   displayed={displayed}
                   active={id === roomId}
                   roomId={roomId}
+                  avatar={avatar}
                 />
               );
             })}

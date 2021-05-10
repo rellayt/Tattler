@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Message as ChannelMessage } from '../ChannelMessages/ChannelMessages.styles';
 
 export const Wrapper = styled.div`
   grid-column: 2/3;
@@ -39,7 +40,7 @@ export const Heading = styled.div`
 export const PrivateMessagesWrapper = styled.div`
   width: 100%;
   overflow-y: auto;
-  padding: 5px 15px;
+  padding: 5px 5px 5px 10px;
   background: ${({ theme: { colors } }) => colors.white};
   display: flex;
   flex-direction: column-reverse;
@@ -60,5 +61,14 @@ export const FindFriends = styled.div`
 
 export const Displayed = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.s};
-  color: ${({ theme: { colors } }) => colors.grassGreen};
+  color: ${({ theme: { colors } }) => colors.darkGrey};
+  grid-row: 4/5;
+  grid-column: 1/2;
+  display: flex;
+  align-self: center;
+  justify-content: flex-end;
+`;
+
+export const Message = styled(ChannelMessage)`
+  grid-template-rows: 25px 1fr 20px 10px;
 `;

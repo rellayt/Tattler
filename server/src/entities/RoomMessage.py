@@ -17,7 +17,7 @@ class RoomMessage(db.Entity):
 
     def json(self):
         return {'name': str(self.user.name), 'message': self.message, 'created_at': str(self.created_at),
-                'userId': str(self.user.id), 'displayed': self.displayed, 'roomId': self.roomId}
+                'userId': str(self.user.id), 'displayed': self.displayed, 'roomId': self.roomId, 'avatar': self.user.avatar}
 
     def overview_json(self):
         return {'message': self.message, 'created_at': str(self.created_at),

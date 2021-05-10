@@ -21,7 +21,7 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) =>
 
   useEffect(() => {
     if (!enabled) return;
-
+    setLoading(true);
     socket.on('connect', () => socket.emit('JOIN', { channelId }));
 
     socket.on(`MESSAGES_CHANNEL_${channelId}`, ({ messages }) => {
@@ -31,7 +31,6 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) =>
     });
 
     socket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
-      console.log('Typing: ', typingUsers);
       typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0] !== userId) ? setTyping(true) : setTyping(false);
     });
 

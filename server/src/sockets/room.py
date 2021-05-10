@@ -2,9 +2,10 @@ import uuid
 from flask_socketio import emit
 from flask import request
 from pony.orm import db_session, desc, select, delete
-from src.entities.Room import Room
+from src.entities.Room import Room, RoomType
 from src.entities.RoomMessage import RoomMessage
 from src.entities.RoomParticipant import RoomParticipant
+from src.entities.User import User
 from src.helpers import destructure
 from src.middlewares.jwt import jwt_decode_user
 from src.middlewares.messages import room_message_fields_validation
@@ -18,11 +19,11 @@ def room(socketio):
     @db_session
     def join(data):
         try:
-            roomId = data['roomId']
-            print(request.user['name'], ' joined room ', roomId)
-            check_not_displayed(roomId)
-            emit_room_participants(roomId)
-            emit_room_messages(roomId)
+            room_id = data['roomId']
+            print(request.user['name'], ' joined room ', room_id)
+            check_not_displayed(room_id)
+            emit_room_participants(room_id)
+            emit_room_messages(request.user['id'], room_id)
         except Exception as e:
             print(e)
 
@@ -31,8 +32,8 @@ def room(socketio):
     @db_session
     def join():
         try:
-            userId = request.user['id']
-            emit_user_overview(userId)
+            user_id = request.user['id']
+            emit_user_overview(user_id)
         except Exception as e:
             print(e)
 
@@ -40,7 +41,9 @@ def room(socketio):
         try:
             user_id = request.user['id']
             participants = RoomParticipant.select(lambda p: p.room.id == room_id and p.user.id != uuid.UUID(user_id))
-            emit(f'ROOM_USERS_{room_id}', {'users': [{'name': p.user.name, 'id': str(p.user.id)} for p in participants]})
+            updated_users = select(u for u in User for p in participants if u.id == p.user.id)
+            emit(f'ROOM_USERS_{room_id}',
+                 {'users': [{'name': u.name, 'id': str(u.id), 'avatar': u.avatar} for u in updated_users]})
         except Exception as e:
             print(e)
 
@@ -48,19 +51,24 @@ def room(socketio):
         try:
             user_id = request.user['id']
             last_room_message = RoomMessage.select(lambda p: p.roomId == room_id).order_by(
-                    lambda p: desc(p.created_at)).first()
-
+                lambda p: desc(p.created_at)).first()
+            if last_room_message is None:
+                return
             if last_room_message.user.id != uuid.UUID(user_id):
                 last_room_message.displayed = True
             emit_overview_to_participants(room_id)
         except Exception as e:
             print(e)
 
-    def emit_room_messages(room_id):
+    def emit_room_messages(user_id, room_id):
         try:
-            channel_messages = RoomMessage.select(roomId=room_id).order_by(lambda p: desc(p.created_at))
-            result = {'messages': [msg.json() for msg in channel_messages]}
-            emit(f'ROOM_MESSAGES_{room_id}', result, broadcast=True)
+            room_messages = RoomMessage.select(roomId=room_id).order_by(lambda p: desc(p.created_at))
+            messages = [msg.json() for msg in room_messages]
+            participants = RoomParticipant.select(lambda p: p.room.id == room_id)
+            updated_users = select(u for u in User for p in participants if u.id == p.user.id)
+            avatars = [{'id': str(u.id), 'avatar': u.avatar} for u in updated_users]
+            print(avatars)
+            emit(f'ROOM_MESSAGES_{room_id}', {'messages': messages, 'avatars': avatars}, broadcast=True)
         except Exception as e:
             print(e)
 
@@ -73,7 +81,7 @@ def room(socketio):
             [message, room_id] = destructure(data, 'message', 'roomId')
             user_id = request.user['id']
             RoomMessage(message=message, roomId=room_id, displayed=False, user=user_id)
-            emit_room_messages(room_id)
+            emit_room_messages(user_id, room_id)
             emit_overview_to_participants(room_id)
         except Exception as e:
             print(e)
@@ -81,22 +89,35 @@ def room(socketio):
     def emit_user_overview(user_id):
         try:
             user_rooms = select(
-                r.id for r in Room for p in RoomParticipant if r.id == p.room.id and p.user.id == uuid.UUID(user_id))
-            room_messages = []
-            for roomId in user_rooms:
-                room_message = select(m for m in RoomMessage if roomId == m.roomId).order_by(
-                    lambda m: desc(m.created_at)).first()
-                if not bool(room_message):
+                r for r in Room for p in RoomParticipant if r.id == p.room.id and p.user.id == uuid.UUID(user_id))
+            overview_messages = []
+            for room in user_rooms:
+                last_room_message = select(m for m in RoomMessage if room.id == m.roomId) \
+                    .order_by(lambda m: desc(m.created_at)).first()
+
+                if not bool(last_room_message):
                     continue
+
                 room_participants = select(
-                    p.user.name for p in RoomParticipant if str(p.room.id) == roomId and str(p.user.id) != user_id)
-                room_message_json = room_message.overview_json()
-                room_message_json['isYourMessage'] = user_id == str(room_message.user.id)
-                room_message_json['names'] = [n for n in room_participants]
-                room_messages.append(room_message_json)
-            # print(f'ROOM_OVERVIEW_{user_id}', {'overviewMessages': room_messages})
-            room_messages.sort(key=lambda item: item['created_at'], reverse=True)
-            emit(f'ROOM_OVERVIEW_{user_id}', {'overviewMessages': room_messages}, broadcast=True)
+                    p for p in RoomParticipant
+                    if str(p.room.id) == room.id and str(p.user.id) != user_id)
+
+                overview_message = last_room_message.overview_json()
+                overview_message['isYourMessage'] = user_id == str(last_room_message.user.id)
+
+                if room.type == RoomType.MULTI:
+                    overview_message['avatar'] = 'group'
+                    overview_message['userId'] = None
+                else:
+                    participant = room_participants.first()
+                    participant_updated = User.get(id=participant.user.id)
+                    overview_message['avatar'] = participant_updated.avatar
+                    overview_message['userId'] = str(participant_updated.id)
+
+                overview_message['names'] = [p.user.name for p in room_participants]
+                overview_messages.append(overview_message)
+            overview_messages.sort(key=lambda item: item['created_at'], reverse=True)
+            emit(f'ROOM_OVERVIEW_{user_id}', {'overviewMessages': overview_messages}, broadcast=True)
         except Exception as e:
             print(e)
 
@@ -120,7 +141,6 @@ def room(socketio):
 
             if not exists:
                 room_typing_users.append({room_id: user_id})
-            # room_typing_users.append({roomId: userId})
             emit(f'TYPING_ROOM_{room_id}', {'id': user_id}, broadcast=True)
         except Exception as e:
             print(e)

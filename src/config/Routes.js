@@ -44,7 +44,13 @@ const routes = [
     privateAfterAuth: false,
   },
   {
-    path: '/messages/:roomId',
+    path: '/messages/r/:roomId',
+    component: Messages,
+    privateBeforeAuth: true,
+    privateAfterAuth: false,
+  },
+  {
+    path: '/messages/new',
     component: Messages,
     privateBeforeAuth: true,
     privateAfterAuth: false,

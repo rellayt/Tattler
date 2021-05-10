@@ -18,6 +18,11 @@ export const Heading = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   border-bottom: 1px solid ${({ theme: { colors } }) => colors.border};
   padding: 8%;
+  div:first-child {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+  }
   &::before {
     content: 'Chats';
   }

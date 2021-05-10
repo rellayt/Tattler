@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Card,
   Content,
+  Graphic,
+  GraphicHeading,
+  GraphicMessage,
+  GraphicMessageWrapper,
   GraphicSection,
   Heading,
   Item,
   List,
   Paragraph,
   UnderHeading,
-  Graphic,
-  GraphicHeading,
-  GraphicMessageWrapper,
-  GraphicMessage,
 } from './Home.styles';
 
 const Home = () => (

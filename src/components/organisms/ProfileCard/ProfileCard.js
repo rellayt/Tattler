@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, AvatarWrapper, Heading, Wrapper, Lastlogin, Item, ButtonsWrapper } from './ProfileCard.styles';
+import { Avatar, AvatarWrapper, ButtonsWrapper, Heading, Item, Lastlogin, Wrapper } from './ProfileCard.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../atoms/Button/Button';
@@ -7,37 +7,55 @@ import Moment from 'react-moment';
 import UserAvatar from '../../molecules/UserAvatar/UserAvatar';
 import DeleteButton from '../../atoms/DeleteButton/DeleteButton';
 import { useUser } from '../../../hooks/useUser';
+import { useAuthDispatch } from '../../../providers/Auth';
+import { CircularLoading } from '../../atoms/CircularLoading/CircularLoading';
 
 const ProfileCard = ({ id, name, avatar, email, date }) => {
   const initPath = `${process.env.REACT_APP_API_URL}/media/${id}?t=${Date.now()}`;
+  const dispatch = useAuthDispatch();
+
   const [path, setPath] = useState(initPath);
-  const { uploadAvatar } = useUser();
-  const handleClick = (e) => {
-    console.log(e.target.value);
+  const [avatarLoading, setAvatarLoading] = useState(false);
+
+  const { uploadAvatar, deleteAvatar } = useUser();
+
+  const handleClick = async () => {
+    setAvatarLoading(true);
+    await deleteAvatar(dispatch);
+    setAvatarLoading(false);
   };
   const handleFileSelected = async (e) => {
     const file = e.target.files[0];
-    const pathPart = await uploadAvatar(file);
-    setPath(`${process.env.REACT_APP_API_URL}${pathPart}?t=${Date.now()}`);
+    setAvatarLoading(true);
+    await uploadAvatar(dispatch, file);
+    setPath(`${process.env.REACT_APP_API_URL}/media/${id}?t=${Date.now()}`);
+    setAvatarLoading(false);
   };
   return (
     <Wrapper>
       <AvatarWrapper>
-        {avatar ? (
-          <UserAvatar size={'150px'} path={path} />
+        {avatarLoading ? (
+          <CircularLoading />
         ) : (
-          <Avatar>
-            <FontAwesomeIcon icon={faUserAlt} />
-          </Avatar>
+          <>
+            {avatar ? (
+              <UserAvatar size={'150px'} path={path} />
+            ) : (
+              <Avatar>
+                <FontAwesomeIcon icon={faUserAlt} />
+              </Avatar>
+            )}
+          </>
         )}
+
         <ButtonsWrapper>
           <label htmlFor="upload-photo">
             <input style={{ display: 'none' }} id="upload-photo" name="upload-photo" type="file" onChange={handleFileSelected} />
-            <Button variant="contained" component="span" onClick={handleClick}>
+            <Button variant="contained" component="span">
               Change avatar
             </Button>
           </label>
-          <DeleteButton />
+          {avatar && <DeleteButton handleClick={handleClick} />}
         </ButtonsWrapper>
       </AvatarWrapper>
 
