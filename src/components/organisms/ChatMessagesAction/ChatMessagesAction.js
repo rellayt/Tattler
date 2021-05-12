@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Wrapper, InputWrapper } from './PrivateMessagesAction.styles';
+import { Wrapper, InputWrapper } from './ChatMessagesAction.styles';
 import { ButtonWrapper } from '../ChannelActions/ChannelActions.styles';
 import { Input } from '../../atoms/TextField/TextField';
 import { Button } from '../../atoms/Button/Button';
 
-const PrivateMessagesAction = ({ active, sendMessage, startTyping, endTyping, loading }) => {
+const ChatMessagesAction = ({ active, sendMessage, startTyping, endTyping, loading }) => {
   const [message, setMessage] = useState('');
 
   const handleClick = () => {
@@ -59,4 +59,4 @@ const PrivateMessagesAction = ({ active, sendMessage, startTyping, endTyping, lo
   );
 };
 
-export default PrivateMessagesAction;
+export default ChatMessagesAction;

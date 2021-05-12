@@ -26,13 +26,13 @@ export const LoadingWrapper = styled.div`
   span:first-child {
     transform: scale(1);
     margin: 0;
-    border-radius: 15px 15px 0 0;
+    border-radius: 12px 15px 0 0;
   }
   span:nth-child(2) {
-    margin: 55px auto 30px auto;
+    margin: 35px auto 30px auto;
   }
   span:last-child {
-    margin: 30px auto;
+    margin: 12px auto;
   }
   & > * {
     margin: 10px;

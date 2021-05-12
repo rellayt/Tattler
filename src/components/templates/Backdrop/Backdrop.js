@@ -16,4 +16,9 @@ export const Backdrop = styled(BackdropWrapper)`
   color: ${({ theme: { colors } }) => colors.white};
   transition: opacity;
   animation: ${fade} 1s ease;
+  display: flex;
+  align-items: center;
+  div:first-child {
+    margin: auto 0;
+  }
 `;

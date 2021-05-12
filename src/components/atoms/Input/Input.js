@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Input = styled.input`
   padding: ${({ isPassword }) => (isPassword ? '0 70px 0 20px' : '0 20px')};
-  background: ${({ theme: { colors } }) => colors.white};
-  color: ${({ theme: { colors } }) => colors.darkGrey};
+  background: ${({ theme: { colors } }) => colors.lightGrey};
+  color: ${({ theme: { colors } }) => colors.black};
   width: 100%;
   line-height: 55px;
   box-sizing: border-box;

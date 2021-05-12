@@ -3,7 +3,7 @@ import Login from '../views/auth/Login';
 import Register from '../views/auth/Register';
 import Profile from '../views/Profile';
 import Channels from '../views/Channels';
-import Messages from '../views/Messages';
+import Chats from '../views/Chats';
 import SelectedProfile from '../views/SelectedProfile';
 
 const routes = [
@@ -44,20 +44,20 @@ const routes = [
     privateAfterAuth: false,
   },
   {
-    path: '/messages/r/:roomId',
-    component: Messages,
+    path: '/chats/r/:roomId',
+    component: Chats,
     privateBeforeAuth: true,
     privateAfterAuth: false,
   },
   {
-    path: '/messages/new',
-    component: Messages,
+    path: '/chats/new',
+    component: Chats,
     privateBeforeAuth: true,
     privateAfterAuth: false,
   },
   {
-    path: '/messages',
-    component: Messages,
+    path: '/chats',
+    component: Chats,
     privateBeforeAuth: true,
     privateAfterAuth: false,
   },

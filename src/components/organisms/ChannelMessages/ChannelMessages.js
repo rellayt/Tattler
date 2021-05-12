@@ -14,7 +14,6 @@ const ChannelMessages = ({ id, messages, loading, setChildFn, isTyping }) => {
     setTimeout(() => ref.current.scrollTo({ top: 0, behavior: 'smooth' }), 30);
   };
   useEffect(() => setChildFn({ scrollToBottom }), [setChildFn]);
-  console.log(messages);
   return (
     <>
       <Wrapper ref={ref}>

@@ -48,10 +48,10 @@ export const AvatarWrapper = styled.div`
 export const Content = styled.div`
   grid-row: 2/3;
   min-width: min-content;
-  max-width: 47%;
+  max-width: 42vw;
   text-overflow: ellipsis;
-  position: relative;
   overflow: hidden;
+  position: relative;
   padding: 8px 10px;
   box-shadow: inset 0 0 5px -4px rgba(0, 0, 0, 5);
 `;
@@ -68,5 +68,5 @@ export const Date = styled.div`
   justify-self: flex-start;
   align-self: center;
   color: ${({ theme: { colors } }) => colors.darkGrey};
-  font-size: ${({ theme: { fontSize } }) => fontSize.xs};
+  font-size: ${({ theme: { fontSize } }) => fontSize.xxs};
 `;

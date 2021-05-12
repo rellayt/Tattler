@@ -22,6 +22,9 @@ export const Heading = styled.div`
     width: 100%;
     justify-content: flex-end;
     display: flex;
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
   }
   &::before {
     content: 'Chats';

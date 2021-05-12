@@ -24,6 +24,7 @@ export const theme = {
     m: '18px',
     s: '14px',
     xs: '12px',
+    xxs: '11px',
   },
   boxShadow: {
     auth: '0 2px 11px 3px rgb(0 0 0 / 8%)',

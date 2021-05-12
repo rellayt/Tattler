@@ -13,8 +13,9 @@ class User(db.Entity):
     message = Set("RoomMessage")
     room_participant = Set("RoomParticipant")
     avatar = Required(bool, default=False)
+    last_logged = Required(datetime, default=datetime.now)
     created_at = Required(datetime, default=datetime.now)
     updated_at = Required(datetime, default=datetime.now)
 
     def json(self):
-        return {'id': str(self.id), 'name': self.name, 'email': self.email, 'created_at': str(self.created_at), 'avatar': self.avatar}
+        return {'id': str(self.id), 'name': self.name, 'email': self.email, 'created_at': str(self.created_at), 'avatar': self.avatar, 'lastLogged': str(self.last_logged)}

@@ -4,9 +4,9 @@ import { HeaderIconWrapper } from './HeaderIcon.styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { StyledTooltip } from '../Tooltip/Tooltip';
 
-export const HeaderIcon = ({ icon, tooltip, action }) => (
+export const HeaderIcon = ({ icon, tooltipContent, action, placement }) => (
   <ButtonBase onClick={action}>
-    <StyledTooltip title={tooltip} enterDelay={100}>
+    <StyledTooltip title={tooltipContent} enterDelay={100} placement={placement}>
       <HeaderIconWrapper>
         <FontAwesomeIcon icon={icon} />
       </HeaderIconWrapper>

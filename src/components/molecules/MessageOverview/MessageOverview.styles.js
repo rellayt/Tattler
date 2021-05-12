@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     border-radius: 10px;
     padding: 3px;
     a {
-      grid-template-columns: 22% 55% 14% 9%;
+      grid-template-columns: 22% 54% 15% 9%;
     }
   }
   @media (max-width: 768px) {
@@ -45,12 +45,16 @@ export const Avatar = styled.div`
   align-items: center;
 `;
 export const Name = styled.div`
-  grid-column: 2/4;
+  grid-column: 2/5;
   grid-row: 1/2;
   margin-left: 3px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
+  //display: flex;
+  //justify-content: flex-start;
+  //align-items: flex-end;
+  margin-top: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   font-weight: ${({ displayed }) => (displayed ? '400' : '500')};
   color: ${({ displayed, theme: { colors } }) => (displayed ? colors.black : colors.lowBlack)};
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
@@ -67,6 +71,7 @@ export const Message = styled.span`
   white-space: nowrap;
   font-weight: ${({ displayed }) => (displayed ? '400' : '500')};
   color: ${({ displayed, theme: { colors } }) => (displayed ? colors.black : colors.grassGreen)};
+  font-size: ${({ theme: { fontSize } }) => fontSize.m};
   @media (max-width: 768px) {
     display: none;
   }
@@ -74,11 +79,10 @@ export const Message = styled.span`
 export const Date = styled.div`
   grid-column: 3/4;
   grid-row: 2/3;
-  display: flex;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  justify-content: center;
+  margin: 0 auto;
   font-size: ${({ theme: { fontSize } }) => fontSize.s};
   color: ${({ theme: { colors } }) => colors.lowBlack};
   @media (max-width: 768px) {

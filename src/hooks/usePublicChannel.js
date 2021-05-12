@@ -8,7 +8,7 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) =>
   const [typing, setTyping] = useState(false);
   const { token } = useAuthState();
 
-  const SOCKET_URL = process.env.REACT_APP_WEB_SOCKET_CHANNEL_URL;
+  const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/public_channel`;
   const socket = Socketio.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) =>
       typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0] !== userId) ? setTyping(true) : setTyping(false);
     });
 
-    socket.on('disconnect', () => console.log('Disconnect'));
+    socket.on('disconnect', () => console.log('Disconnected from public channel'));
 
     return () => socket.disconnect();
   }, [enabled, channelId, onConnected]);

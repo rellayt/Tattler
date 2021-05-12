@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Name, SearchResults, SearchResultsItem, SearchWrapper, StatusInfo, Wrapper } from './SearchBar.styles';
+import { SearchResults, SearchResultsItem, SearchWrapper, Wrapper } from './SearchBar.styles';
 import { Input } from 'components/atoms/Input/Input';
 import { useSearch } from '../../../hooks/useSearch';
 import { debounce } from 'lodash';
 import { useCombobox } from 'downshift';
-import { Link } from 'react-router-dom';
 
-const SearchBar = ({ name, placeholder, history }) => {
+const SearchBar = ({ placeholder, history, handleAdd, participants = [] }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [matchingUsers, setMatchingUsers] = useState([]);
   const { searchUsers } = useSearch();
@@ -14,37 +13,37 @@ const SearchBar = ({ name, placeholder, history }) => {
   const getMatchingUsers = debounce(async ({ inputValue }) => {
     setIsLoading(true);
     const { users } = await searchUsers(inputValue);
-    setMatchingUsers(users);
+    const filteredUsers = users.filter((user) => user.id !== participants.find(({ id = 'none' }) => id === user.id)?.id);
 
+    setMatchingUsers(filteredUsers);
     getInputProps().value === '' ? setIsLoading(true) : setIsLoading(false);
   }, 350);
 
-  const { isOpen, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
+  const { isOpen, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps, setInputValue } = useCombobox({
     items: matchingUsers,
     itemToString: (item) => (item ? item.name : ''),
     onInputValueChange: getMatchingUsers,
-    onSelectedItemChange: ({ selectedItem: { id } }) => history.push(`/profile/${id}`),
+    onSelectedItemChange: ({ selectedItem: { id } }) => {
+      if (handleAdd) {
+        handleAdd(id);
+        setMatchingUsers([]);
+      } else {
+        history.push(`/profile/${id}`);
+      }
+      setInputValue('');
+    },
   });
 
-  // e.key === 'Enter' ?? history.push();
   return (
     <Wrapper>
-      <StatusInfo>
-        <p>Welcome,</p>
-        <p>
-          <Name>{name}</Name>
-        </p>
-      </StatusInfo>
       <SearchWrapper {...getComboboxProps()}>
         <Input {...getInputProps()} name="Search" isRound placeholder={placeholder} />
         <SearchResults isVisible={isOpen && matchingUsers.length > 0} {...getMenuProps()}>
           {isOpen &&
-            matchingUsers.map((item, index) => (
-              <Link to={`/profile/${item.id}`} key={item.id}>
-                <SearchResultsItem {...getItemProps({ item, index })} isHighlighted={highlightedIndex === index}>
-                  {item.name}
-                </SearchResultsItem>
-              </Link>
+            matchingUsers.slice(0, 5).map((item, index) => (
+              <SearchResultsItem {...getItemProps({ item, index })} isHighlighted={highlightedIndex === index} key={index}>
+                {item.name}
+              </SearchResultsItem>
             ))}
         </SearchResults>
         {matchingUsers.length === 0 && getInputProps().value !== '' && !isLoading && (

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Wrapper } from './Header.styles';
+import { Name, StatusInfo, Wrapper } from './Header.styles';
 import SearchBar from '../SearchBar/SearchBar';
-import HeaderAuth from '../../molecules/HeaderAuth/HeaderAuth';
+import HeaderActions from '../../molecules/HeaderActions/HeaderActions';
 import { useAuthState } from '../../../providers/Auth';
 import { useHistory } from 'react-router-dom';
 
@@ -11,8 +11,18 @@ export const Header = () => {
 
   return (
     <Wrapper>
-      {user ? <SearchBar history={history} name={user.name} placeholder={'Find users'} /> : null}
-      <HeaderAuth isLogged={Boolean(user)} />
+      {user && (
+        <>
+          <StatusInfo>
+            <p>Welcome,</p>
+            <p>
+              <Name>{user.name}</Name>
+            </p>
+          </StatusInfo>
+          <SearchBar history={history} placeholder={'Find users'} />
+        </>
+      )}
+      <HeaderActions isLogged={Boolean(user)} />
     </Wrapper>
   );
 };

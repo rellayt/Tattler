@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import MessageOverview from '../../molecules/MessageOverview/MessageOverview';
-import { Heading, Wrapper, LastMessages } from './MessageOverviewList.styles';
+import { Heading, Wrapper, LastMessages } from './ChatOverviewList.styles';
 import Skeleton from '@material-ui/lab/Skeleton';
 import AddIcon from '../../atoms/AddIcon/AddIcon';
 
-export const MessageOverviewList = ({ roomId: id, userId, socket, setAnyChats, activeCreateRoom }) => {
+export const ChatOverviewList = ({ roomId: id, userId, socket, activeCreateRoom, setAnyChats }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ export const MessageOverviewList = ({ roomId: id, userId, socket, setAnyChats, a
   return (
     <Wrapper>
       <Heading>
-        <AddIcon active={activeCreateRoom} />
+        <AddIcon active={activeCreateRoom} tooltipContent={'Create room'} placement={'top'} />
       </Heading>
       <LastMessages>
         {loading ? (
@@ -52,4 +52,4 @@ export const MessageOverviewList = ({ roomId: id, userId, socket, setAnyChats, a
   );
 };
 
-export default MessageOverviewList;
+export default ChatOverviewList;

@@ -4,28 +4,14 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 40px;
+
+  //padding: 0 40px;
 
   @media (max-width: 768px) {
     padding: 0 20px;
   }
   @media (max-width: 480px) {
     padding: 0 10px;
-  }
-`;
-
-export const StatusInfo = styled.div`
-  color: ${({ theme }) => theme.colors.darkGrey};
-  font-size: ${({ theme }) => theme.fontSize.l};
-  margin-right: 40px;
-  p {
-    margin: 5px;
-  }
-  @media (max-width: 768px) {
-    margin-right: 20px;
-  }
-  @media (max-width: 480px) {
-    margin-right: 10px;
   }
 `;
 
@@ -50,9 +36,6 @@ export const SearchResults = styled.ul`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
   pointer-events: ${({ noResult }) => (noResult ? 'none' : 'auto')};
-  a {
-    text-decoration: none;
-  }
 `;
 
 export const SearchResultsItem = styled.li`
@@ -70,8 +53,4 @@ export const SearchResultsItem = styled.li`
     background-color: ${({ theme }) => theme.colors.grey};
     color: ${({ theme }) => theme.colors.black};
   }
-`;
-
-export const Name = styled.strong`
-  font-weight: 500;
 `;

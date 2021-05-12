@@ -7,6 +7,7 @@ from flask_restful import Api
 from src.connection import db
 from src.routes import load_routes
 from src.sockets.channels import channels
+from src.sockets.page import page
 from src.sockets.room import room
 from src.utility.enumConverter import EnumConverter
 from src.utility.error_handler import response_feedback
@@ -40,6 +41,7 @@ def page_not_found(e):
 socketio = SocketIO(app, cors_allowed_origins="*")
 channels(socketio)
 room(socketio)
+page(socketio)
 
 if __name__ == '__main__':
 	db.provider.converter_classes.append((Enum, EnumConverter))

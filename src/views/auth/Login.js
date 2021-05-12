@@ -12,6 +12,9 @@ import { useAuthDispatch, useAuthState } from '../../providers/Auth';
 import { signIn } from '../../store/actions/Auth';
 import { useHistory } from 'react-router-dom';
 import { CircularLoading } from '../../components/atoms/CircularLoading/CircularLoading';
+import { useSnackBarDispatch } from '../../providers/SnackBar';
+import { OpenSnackBar } from '../../store/actions/SnackBar';
+import { LOGGED_IN } from '../../config/Snackbars';
 
 const initialValues = {
   login: '',
@@ -19,8 +22,10 @@ const initialValues = {
 };
 const Login = () => {
   const history = useHistory();
-  const dispatch = useAuthDispatch();
+  const authDispatch = useAuthDispatch();
   const { loading } = useAuthState();
+  const snackBarDispatch = useSnackBarDispatch();
+
   const { values, handleBlur, touched, errors, handleReset, handleChange, handleSubmit, isValid } = useFormik({
     initialValues,
     validationSchema: LoginSchema,
@@ -28,7 +33,8 @@ const Login = () => {
     onSubmit: async (values, actions) => {
       try {
         const { login, password } = values;
-        await signIn(dispatch, { login, password });
+        await signIn(authDispatch, { login, password });
+        OpenSnackBar(snackBarDispatch, LOGGED_IN);
         history.push('/home');
         handleReset(null);
       } catch (error) {
@@ -38,7 +44,7 @@ const Login = () => {
           },
         } = error;
         actions.setErrors(verification_error);
-        dispatch({ type: 'LOGIN_FAILED' });
+        authDispatch({ type: 'LOGIN_FAILED' });
       }
     },
   });

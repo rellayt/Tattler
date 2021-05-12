@@ -10,7 +10,7 @@ import { useUser } from '../../../hooks/useUser';
 import { useAuthDispatch } from '../../../providers/Auth';
 import { CircularLoading } from '../../atoms/CircularLoading/CircularLoading';
 
-const ProfileCard = ({ id, name, avatar, email, date }) => {
+const ProfileCard = ({ user: { id, name, avatar, email, lastLogged } }) => {
   const initPath = `${process.env.REACT_APP_API_URL}/media/${id}?t=${Date.now()}`;
   const dispatch = useAuthDispatch();
 
@@ -61,7 +61,7 @@ const ProfileCard = ({ id, name, avatar, email, date }) => {
 
       <Heading>My profile</Heading>
       <Lastlogin>
-        Last login: <Moment format="MM/DD hh:mm:ss">{date}</Moment>
+        Last login: <Moment format="MM/DD hh:mm:ss">{lastLogged}</Moment>
       </Lastlogin>
       <Item isBig>{name}</Item>
       <Item>{email}</Item>
@@ -69,5 +69,4 @@ const ProfileCard = ({ id, name, avatar, email, date }) => {
     </Wrapper>
   );
 };
-
 export default ProfileCard;

@@ -3,7 +3,6 @@ from flask import request
 from pony.orm import db_session, desc
 from src.entities.ChannelMessage import ChannelMessage
 from src.entities.Room import Room, RoomType
-from src.entities.RoomMessage import RoomMessage
 from src.entities.RoomParticipant import RoomParticipant
 from src.helpers import destructure
 from src.middlewares.jwt import jwt_decode_user
@@ -42,7 +41,6 @@ def channels(socketio):
             [message, channelId] = destructure(data, 'message', 'channelId')
             ChannelMessage(message=message, channelId=channelId, fromUser=request.user['id'])
             emit_messages({'channelId': channelId})
-            RoomMessage(message=message, roomId='fasfsa', displayed=False, user=request.user['id'])
             room = Room(type=RoomType.PRIVATE)
             RoomParticipant(room=room, user=request.user['id'])
         except Exception as e:

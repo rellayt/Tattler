@@ -4,10 +4,9 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-
   justify-content: flex-end;
   padding-right: 50px;
-  grid-column: 2/3;
+  grid-column: 3/4;
   Button:first-child {
     margin-right: 20px;
   }
@@ -20,6 +19,7 @@ export const Wrapper = styled.div`
   }
   @media (max-width: 768px) {
     padding-right: 10px;
+    grid-column: ${({ isLogged }) => (isLogged ? '3/4' : '1/3')};
   }
   @media (max-width: 480px) {
     padding: 0;
@@ -27,6 +27,13 @@ export const Wrapper = styled.div`
     Button:first-child {
       margin-right: 0;
     }
+  }
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  @media (max-width: 768px) {
+    grid-column: 1/3;
   }
 `;
 

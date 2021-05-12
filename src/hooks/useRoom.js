@@ -16,18 +16,18 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
   const startTyping = () => socket.emit('START_TYPING', { roomId, userId });
   const endTyping = () => socket.emit('END_TYPING', { roomId, userId });
 
-  const createRoom = async ({ isPrivate, userId }) => {
+  const createRoom = async ({ isPrivate, users }) => {
     try {
       const {
         data: { room },
-      } = await post(`${process.env.REACT_APP_API_URL}/room`, { isPrivate, userId });
+      } = await post(`${process.env.REACT_APP_API_URL}/room`, { isPrivate, users });
       return room;
     } catch (e) {
       console.error(e);
     }
   };
 
-  const SOCKET_URL = process.env.REACT_APP_WEB_SOCKET_ROOM;
+  const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/room`;
   const socket = Socketio.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
@@ -38,18 +38,22 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
 
   useEffect(() => {
     socket.emit('JOIN');
+
     if (!enabled) return;
 
     socket.emit('JOIN_ROOM', { roomId });
 
     socket.on(`ROOM_MESSAGES_${roomId}`, (data) => {
+      const { messages } = data;
+      if (messages && messages[0]?.userId !== userId) socket.emit('CHECK_NOT_DISPLAYED', { roomId });
       setMessages(data);
       setMessagesLoading(false);
     });
 
     socket.on(`ROOM_USERS_${roomId}`, ({ users }) => setRoomParticipants(users));
-
     socket.on(`TYPING_ROOM_${roomId}`, ({ id }) => (id && id !== userId ? setTyping(true) : setTyping(false)));
+    socket.on('disconnect', () => console.log('Disconnected from room'));
+
     return () => {
       socket.emit('CHECK_EMPTY_ROOMS');
       socket.disconnect();

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MessagesWrapper = styled.div`
+export const ChatsWrapper = styled.div`
   width: 80%;
   height: 45em;
   margin: 10px 0;
