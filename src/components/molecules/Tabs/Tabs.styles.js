@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   background: ${({ theme: { colors } }) => colors.white};
   border-radius: 15px 0 0 0;
-  //box-shadow: inset 0 0 5px -1px rgba(0, 0, 0, 0.5);
-  .PrivateTabIndicator-root-1 {
+  .MuiTabs-indicator {
     background-color: ${({ theme: { colors } }) => colors.white};
   }
   .MuiTabs-root {
@@ -14,6 +13,7 @@ export const Wrapper = styled.div`
   .MuiTouchRipple-root {
     color: ${({ theme: { colors } }) => colors.grassGreen};
   }
+
   .MuiTab-textColorInherit.Mui-selected {
     transition: ease 300ms;
     color: ${({ theme: { colors } }) => colors.white};

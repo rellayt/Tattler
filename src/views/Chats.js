@@ -3,13 +3,14 @@ import { ChatsWrapper } from './Chats.styles';
 import ChatOverviewList from '../components/organisms/ChatOverviewList/ChatOverviewList';
 import ChatMessages from '../components/organisms/ChatMessages/ChatMessages';
 import ChatMessagesAction from '../components/organisms/ChatMessagesAction/ChatMessagesAction';
-import { useAuthState } from '../providers/Auth';
+import { useAuthDispatch, useAuthState } from '../providers/Auth';
 import { Wrapper } from '../components/templates/BasicWrapper';
 import { useParams } from 'react-router';
 import { useRoom } from '../hooks/useRoom';
 import NewRoom from '../components/organisms/NewRoom/NewRoom';
 import { FindFriends } from '../components/organisms/ChatMessages/ChatMessages.styles';
 import { Button } from '../components/atoms/Button/Button';
+import { refreshToken } from '../store/actions/Auth';
 
 const Chats = ({ history }) => {
   const [anyChats, setAnyChats] = useState(true);
@@ -18,15 +19,32 @@ const Chats = ({ history }) => {
 
   const {
     user: { id },
+    token,
   } = useAuthState();
+  const authDispatch = useAuthDispatch();
 
   const enabled = Boolean(roomId && id);
 
-  const { messages, messagesLoading, typing, sendMessage, startTyping, endTyping, roomParticipants, socket, createRoom } = useRoom({
+  const {
+    messages,
+    messagesLoading,
+    typing,
+    sendMessage,
+    startTyping,
+    endTyping,
+    roomParticipants,
+    socket,
+    createRoom,
+    isTokenRefreshing,
+  } = useRoom({
     enabled,
     roomId,
     userId: id,
+    token,
   });
+  useEffect(() => {
+    (async () => (isTokenRefreshing ? await refreshToken(authDispatch) : null))();
+  }, [isTokenRefreshing]);
 
   useEffect(() => {
     const {

@@ -22,38 +22,41 @@ const initialValues = {
 };
 const Login = () => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
+  // const { loading } = useAuthState();
   const authDispatch = useAuthDispatch();
-  const { loading } = useAuthState();
   const snackBarDispatch = useSnackBarDispatch();
-
-  const { values, handleBlur, touched, errors, handleReset, handleChange, handleSubmit, isValid } = useFormik({
+  const { values, handleBlur, touched, errors, handleReset, handleChange, handleSubmit: submit, isValid } = useFormik({
     initialValues,
     validationSchema: LoginSchema,
     validateOnChange: true,
-    onSubmit: async (values, actions) => {
-      try {
-        const { login, password } = values;
-        await signIn(authDispatch, { login, password });
-        OpenSnackBar(snackBarDispatch, LOGGED_IN);
-        history.push('/home');
-        handleReset(null);
-      } catch (error) {
-        const {
-          response: {
-            data: { verification_error },
-          },
-        } = error;
-        actions.setErrors(verification_error);
-        authDispatch({ type: 'LOGIN_FAILED' });
-      }
-    },
+    onSubmit: async (values, actions) => await handleSubmit(values, actions),
   });
-  const handleKeyPress = (e) => e.key === 'Enter' ?? handleSubmit();
+  const handleSubmit = async (values, actions) => {
+    try {
+      setLoading(true);
+      const { login, password } = values;
+      await signIn(authDispatch, { login, password });
+      OpenSnackBar(snackBarDispatch, LOGGED_IN);
+      setLoading(false);
+      history.push('/home');
+      handleReset(null);
+    } catch (error) {
+      const {
+        response: {
+          data: { verification_error },
+        },
+      } = error;
+      actions.setErrors(verification_error);
+      setLoading(false);
+    }
+  };
+  const handleKeyPress = (e) => e.key === 'Enter' ?? submit();
   const [showPassword, togglePassword] = useState(false);
   const handleTogglePassword = () => togglePassword(!showPassword);
 
   return (
-    <Wrapper as="form" onSubmit={handleSubmit}>
+    <Wrapper as="form" onSubmit={submit}>
       <Card>
         <Heading>Login</Heading>
         <Input

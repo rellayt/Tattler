@@ -4,18 +4,15 @@ import { Card } from '../../../views/Profile.styles';
 export const Wrapper = styled(Card)`
   grid-column: 1/2;
   grid-row: 1/3;
-  button:nth-child(6) {
-    margin-top: 15px;
+  padding: 35px;
+  display: grid;
+  grid-template-rows: 60% 40%;
+  @media (max-width: 1024px) {
+    grid-template-rows: 1fr;
+    grid-template-columns: 40% 60%;
     grid-column: 1/3;
-    justify-self: center;
-    background: ${({ theme: { colors } }) => colors.white};
-    color: ${({ theme: { colors } }) => colors.grassGreen};
-    border: 2px solid ${({ theme: { colors } }) => colors.grassGreen};
-    &:hover {
-      background: ${({ theme: { colors } }) => colors.grassGreen};
-      color: ${({ theme: { colors } }) => colors.white};
-      -webkit-filter: brightness(0.95);
-    }
+    grid-row: 1/2;
+    padding: 10px;
   }
 `;
 
@@ -24,12 +21,24 @@ export const AvatarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   grid-column: 1/3;
-  margin: 20px auto 40px auto;
+  margin: 10px auto 20px auto;
   .MuiCircularProgress-root {
     color: ${({ theme: { colors } }) => colors.grassGreen};
-    width: 117px !important;
-    height: 117px !important;
+    width: 127px !important;
+    height: 127px !important;
     margin: 15px 0;
+  }
+  @media (max-width: 1024px) {
+    margin: 7px;
+    grid-column: 1/2;
+    //align-items: flex-start;
+    justify-content: center;
+    .MuiCircularProgress-root {
+      color: ${({ theme: { colors } }) => colors.grassGreen};
+      width: 70px !important;
+      height: 70px !important;
+      margin: 15px 0;
+    }
   }
 `;
 
@@ -41,8 +50,8 @@ export const Avatar = styled.div`
   align-items: center;
   color: ${({ theme: { colors } }) => colors.grassGreen};
   font-size: 75px;
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   z-index: 1;
   position: relative;
   &::after {
@@ -54,33 +63,81 @@ export const Avatar = styled.div`
     height: 92%;
     background: ${({ theme: { colors } }) => colors.white};
   }
-`;
-export const Heading = styled.div`
-  font-size: ${({ theme: { fontSize } }) => fontSize.l};
-  color: ${({ theme: { colors } }) => colors.black};
-  font-weight: 500;
-  height: 40px;
-  margin-top: auto;
-  grid-column: 1/2;
-`;
-export const Lastlogin = styled.div`
-  font-size: ${({ theme: { fontSize } }) => fontSize.s};
-  color: ${({ theme: { colors } }) => colors.darkGrey};
-  margin-top: auto;
-  margin-left: auto;
-  height: 40px;
-  grid-column: 2/3;
-`;
-export const Item = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: ${({ isBig, theme: { fontSize } }) => (isBig ? fontSize.xl : fontSize.l)};
-  height: 35px;
-  grid-column: 1/3;
+  @media (max-width: 1024px) {
+    width: 94px;
+    height: 94px;
+    font-size: 44px;
+  }
 `;
 
 export const ButtonsWrapper = styled.div`
   margin-top: 30px;
   display: flex;
   gap: 10px;
+  @media (max-width: 1024px) {
+    margin-top: 7px;
+    align-items: center;
+    flex-direction: column;
+  }
+`;
+
+export const ProfileContent = styled.div`
+  display: grid;
+  grid-column: 1/3;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 30% 20% 25% 25%;
+  @media (max-width: 1024px) {
+    grid-column: 2/3;
+    padding: 12px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 33%);
+  }
+`;
+
+export const Heading = styled.div`
+  font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  color: ${({ theme: { colors } }) => colors.black};
+  font-weight: 500;
+  align-self: center;
+  grid-column: 1/3;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+export const LastLogin = styled.div`
+  grid-column: 1/3;
+  justify-self: flex-end;
+  font-size: ${({ theme: { fontSize } }) => fontSize.s};
+  color: ${({ theme: { colors } }) => colors.darkGrey};
+  @media (max-width: 1024px) {
+    text-align: center;
+    grid-column: 1/2;
+    grid-row: 3/4;
+    justify-self: center;
+    align-self: center;
+  }
+`;
+
+export const Name = styled.div`
+  display: flex;
+  grid-column: 1/3;
+  align-items: center;
+  font-size: ${({ theme: { fontSize } }) => fontSize.xxl};
+  @media (max-width: 1024px) {
+    justify-self: center;
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+`;
+
+export const Email = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: ${({ theme: { fontSize } }) => fontSize.xl};
+  @media (max-width: 1024px) {
+    justify-self: center;
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
 `;

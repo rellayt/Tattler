@@ -1,12 +1,18 @@
 import uuid
 from datetime import datetime
 from flask import request
+from flask_socketio import emit
 from pony.orm import db_session
 from src.entities.User import User
 from src.middlewares.jwt import jwt_decode_user
+from src.entities.Notification import Notification
 
 
 def page(socketio):
+	@socketio.on_error('')
+	def error_handler(e):
+		emit('TOKEN_EXPIRED')
+
 	@socketio.on('JOIN_PAGE')
 	@jwt_decode_user
 	@db_session
@@ -27,4 +33,6 @@ def page(socketio):
 		user = User.get(id=uuid.UUID(user_id))
 		user.last_logged = datetime.now()
 		print(request.user['name'], 'left the page')
+		asd = 123
+
 

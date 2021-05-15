@@ -1,43 +1,50 @@
 import { useEffect, useState } from 'react';
-import Socketio from 'socket.io-client';
-import { useAuthState } from '../providers/Auth';
+import io from 'socket.io-client';
+import { useAuthDispatch, useAuthState } from '../providers/Auth';
+import { refreshToken } from '../store/actions/Auth';
 
-export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) => {
+export const usePublicChannel = ({ userId, channelId, enabled, onConnected, token }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [typing, setTyping] = useState(false);
-  const { token } = useAuthState();
+  const [isTokenRefreshing, setTokenRefreshing] = useState(false);
 
   const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/public_channel`;
-  const socket = Socketio.connect(SOCKET_URL, {
+  const channelSocket = io.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const sendMessage = (message) => socket.emit('ADD_MESSAGE', { channelId, message });
-  const startTyping = () => socket.emit('START_TYPING', { channelId, userId });
-  const endTyping = () => socket.emit('END_TYPING', { channelId, userId });
+  const sendMessage = (message) => channelSocket.emit('ADD_MESSAGE', { channelId, message });
+  const startTyping = () => channelSocket.emit('START_TYPING', { channelId, userId });
+  const endTyping = () => channelSocket.emit('END_TYPING', { channelId, userId });
+
+  channelSocket.on('TOKEN_EXPIRED', () => {
+    setTokenRefreshing(true);
+    setLoading(true);
+  });
 
   useEffect(() => {
     if (!enabled) return;
-    setLoading(true);
-    socket.on('connect', () => socket.emit('JOIN', { channelId }));
 
-    socket.on(`MESSAGES_CHANNEL_${channelId}`, ({ messages }) => {
+    setLoading(true);
+    channelSocket.on('connect', () => channelSocket.emit('JOIN', { channelId }));
+
+    channelSocket.on(`MESSAGES_CHANNEL_${channelId}`, ({ messages }) => {
       if (onConnected) onConnected.scrollToBottom();
       setMessages(messages);
       setTimeout(() => setLoading(false), 300);
     });
 
-    socket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
+    channelSocket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
       typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0] !== userId) ? setTyping(true) : setTyping(false);
     });
 
-    socket.on('disconnect', () => console.log('Disconnected from public channel'));
+    channelSocket.on('disconnect', () => console.log('Disconnected from public channel'));
 
-    return () => socket.disconnect();
-  }, [enabled, channelId, onConnected]);
+    return () => channelSocket.disconnect();
+  }, [enabled, channelId, onConnected, token]);
 
   return {
     messages,
@@ -46,5 +53,6 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected }) =>
     startTyping,
     endTyping,
     sendMessage,
+    isTokenRefreshing,
   };
 };

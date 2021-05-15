@@ -17,3 +17,8 @@ export const ROOM_DESTROYED = {
   type: 'error',
   content: 'Room was destroyed',
 };
+
+export const AUTH_ERROR = {
+  type: 'error',
+  content: 'Authentication failure',
+};

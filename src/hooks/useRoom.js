@@ -1,20 +1,19 @@
 import { post } from 'axios';
-import { useAuthState } from '../providers/Auth';
-import Socketio from 'socket.io-client';
+import io from 'socket.io-client';
 import { useEffect, useState } from 'react';
 
-export const useRoom = ({ enabled = false, roomId, userId }) => {
+export const useRoom = ({ enabled = false, roomId, userId, token }) => {
   const [roomParticipants, setRoomParticipants] = useState([]);
 
   const [messages, setMessages] = useState([]);
   const [messagesLoading, setMessagesLoading] = useState(true);
 
   const [typing, setTyping] = useState(false);
-  const { token } = useAuthState();
+  const [isTokenRefreshing, setTokenRefreshing] = useState(false);
 
-  const sendMessage = (message) => socket.emit('ADD_MESSAGE', { roomId, message });
-  const startTyping = () => socket.emit('START_TYPING', { roomId, userId });
-  const endTyping = () => socket.emit('END_TYPING', { roomId, userId });
+  const sendMessage = (message) => roomSocket.emit('ADD_MESSAGE', { roomId, message });
+  const startTyping = () => roomSocket.emit('START_TYPING', { roomId, userId });
+  const endTyping = () => roomSocket.emit('END_TYPING', { roomId, userId });
 
   const createRoom = async ({ isPrivate, users }) => {
     try {
@@ -28,7 +27,7 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
   };
 
   const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/room`;
-  const socket = Socketio.connect(SOCKET_URL, {
+  const roomSocket = io.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
     },
@@ -36,27 +35,30 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
 
   useEffect(() => setMessagesLoading(true), [roomId]);
 
+  roomSocket.on('TOKEN_EXPIRED', () => {
+    setTokenRefreshing(true);
+    setMessagesLoading(true);
+  });
   useEffect(() => {
-    socket.emit('JOIN');
+    roomSocket.emit('JOIN');
 
     if (!enabled) return;
+    roomSocket.emit('JOIN_ROOM', { roomId });
 
-    socket.emit('JOIN_ROOM', { roomId });
-
-    socket.on(`ROOM_MESSAGES_${roomId}`, (data) => {
+    roomSocket.on(`ROOM_MESSAGES_${roomId}`, (data) => {
       const { messages } = data;
-      if (messages && messages[0]?.userId !== userId) socket.emit('CHECK_NOT_DISPLAYED', { roomId });
+      if (messages && messages[0]?.userId !== userId) roomSocket.emit('CHECK_NOT_DISPLAYED', { roomId });
       setMessages(data);
       setMessagesLoading(false);
     });
 
-    socket.on(`ROOM_USERS_${roomId}`, ({ users }) => setRoomParticipants(users));
-    socket.on(`TYPING_ROOM_${roomId}`, ({ id }) => (id && id !== userId ? setTyping(true) : setTyping(false)));
-    socket.on('disconnect', () => console.log('Disconnected from room'));
+    roomSocket.on(`ROOM_USERS_${roomId}`, ({ users }) => setRoomParticipants(users));
+    roomSocket.on(`TYPING_ROOM_${roomId}`, ({ id }) => (id && id !== userId ? setTyping(true) : setTyping(false)));
+    roomSocket.on('disconnect', () => console.log('Disconnected from room'));
 
     return () => {
-      socket.emit('CHECK_EMPTY_ROOMS');
-      socket.disconnect();
+      roomSocket.emit('CHECK_EMPTY_ROOMS');
+      roomSocket.disconnect();
     };
   }, [roomId]);
 
@@ -69,6 +71,7 @@ export const useRoom = ({ enabled = false, roomId, userId }) => {
     startTyping,
     endTyping,
     roomParticipants,
-    socket,
+    socket: roomSocket,
+    isTokenRefreshing,
   };
 };

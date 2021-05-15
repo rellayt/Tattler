@@ -2,37 +2,67 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-let user = cookies.get('user') ? cookies.get('user') : null;
 let token = cookies.get('token') ? cookies.get('token') : null;
 
 export const initialState = {
-  user: user,
   token: token,
-  loading: false,
+  user: null,
+  loading: true,
 };
 
 export const AuthReducer = (initialState, action) => {
   switch (action.type) {
-    case 'USER_UPDATE':
+    case 'REFRESH_TOKEN_REQUEST':
+      return {
+        user: null,
+        token: null,
+        loading: true,
+      };
+    case 'REFRESH_TOKEN_SUCCESS':
+      return {
+        user: action.payload.user,
+        token: action.payload.token,
+        loading: false,
+      };
+    case 'REFRESH_TOKEN_FAILED':
+      return {
+        user: null,
+        token: null,
+        loading: false,
+      };
+    case 'GUEST':
       return {
         ...initialState,
-        user: action.payload.user,
+        loading: false,
       };
-    case 'LOGIN_REQUEST':
+    case 'AUTHENTICATE_REQUEST':
       return {
         ...initialState,
         loading: true,
+      };
+    case 'AUTHENTICATE_SUCCESS':
+      return {
+        ...initialState,
+        loading: false,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
+    case 'AUTHENTICATE_FAILED':
+      return {
+        user: null,
+        token: null,
+        loading: false,
+      };
+    case 'USER_UPDATED':
+      return {
+        ...initialState,
+        user: action.payload.user,
       };
     case 'LOGIN_SUCCESS':
       return {
         ...initialState,
         user: action.payload.user,
         token: action.payload.token,
-        loading: false,
-      };
-    case 'LOGIN_FAILED':
-      return {
-        ...initialState,
         loading: false,
       };
     case 'REGISTER_REQUEST':
@@ -49,7 +79,7 @@ export const AuthReducer = (initialState, action) => {
       };
     case 'LOGOUT':
       return {
-        ...initialState,
+        loading: false,
         user: null,
         token: null,
       };

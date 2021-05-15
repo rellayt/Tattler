@@ -14,12 +14,12 @@ import { SocketProvider } from '../providers/Socket';
 
 const Root = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <StylesProvider injectFirst>
-            <SnackBarProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <StylesProvider injectFirst>
+        <SnackBarProvider>
+          <AuthProvider>
+            <Router>
               <SocketProvider>
                 <MainTemplate>
                   <InnerWrapper>
@@ -27,8 +27,8 @@ const Root = () => {
                       {routes.map(({ path, component, privateAfterAuth, privateBeforeAuth }) => (
                         <AppRoute
                           key={path}
-                          path={path}
                           component={component}
+                          path={path}
                           privateAfterAuth={privateAfterAuth}
                           privateBeforeAuth={privateBeforeAuth}
                         />
@@ -40,11 +40,11 @@ const Root = () => {
                   </InnerWrapper>
                 </MainTemplate>
               </SocketProvider>
-            </SnackBarProvider>
-          </StylesProvider>
-        </ThemeProvider>
-      </Router>
-    </AuthProvider>
+            </Router>
+          </AuthProvider>
+        </SnackBarProvider>
+      </StylesProvider>
+    </ThemeProvider>
   );
 };
 

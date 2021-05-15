@@ -8,7 +8,7 @@ const Navigation = () => (
     </Logo>
     <StyledLink to="/home" text={'Home'} />
     <StyledLink to="/channel" text={'Channels'} />
-    <StyledLink to="/chats" text={'Chats'} />
+    <StyledLink to="/chats" text={'Rooms'} />
   </Wrapper>
 );
 

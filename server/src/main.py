@@ -22,16 +22,17 @@ app.config['SECRET_KEY'] = 'secret!'
 api = Api(app, "/api")
 
 CORS(app)
-cors = CORS(app, resources={r"/api/*": {"origins": "https://localhost:3000/"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000/"}}, support_credentials=True)
 
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=7)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["MEDIA"] = MEDIA_FOLDER
-
+app.config['CORS_HEADERS'] = 'Set-Cookie'
+JWT_TOKEN_LOCATION = ['cookies']
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -10,7 +10,6 @@ class ImageController(Resource):
 	@jwt_decode_user
 	def post(self):
 		try:
-			print(request.files)
 			if 'image' not in request.files:
 				return {'error': 'No image'}, 409
 			user_id = request.user['id']

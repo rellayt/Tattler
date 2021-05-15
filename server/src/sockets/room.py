@@ -14,6 +14,10 @@ room_typing_users = []
 
 
 def room(socketio):
+	@socketio.on_error('/room')
+	def error_handler(e):
+		emit('TOKEN_EXPIRED')
+
 	@socketio.on('JOIN_ROOM', namespace='/room')
 	@jwt_decode_user
 	@db_session

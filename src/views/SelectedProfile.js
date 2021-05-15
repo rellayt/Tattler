@@ -30,7 +30,7 @@ const SelectedProfile = ({ history }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const { user } = await getUser(id);
+      const { user } = await getUser(id, { commonRoom: true, totalMessages: true });
       setUser(user);
       setLoading(false);
     })();

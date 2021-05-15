@@ -3,29 +3,45 @@ import { ContentCard, Heading, Wrapper } from './Profile.styles';
 import { useAuthState } from '../providers/Auth';
 import ProfileCard from '../components/organisms/ProfileCard/ProfileCard';
 import { useUser } from '../hooks/useUser';
+import ProfileInformation from '../components/organisms/ProfileInformation/ProfileInformation';
+import { useWindowDimensions } from '../hooks/useWindowDimensions';
+import ProfileLastMessages from '../components/organisms/ProfileLastMessages/ProfileLastMessages';
 
 const Profile = () => {
   const [user, setUser] = useState({});
-
+  const [information, setInformation] = useState({});
+  const [userUpdated, setUserUpdated] = useState(false);
+  const [lastMessages, setLastMessages] = useState([]);
+  const { width } = useWindowDimensions();
   const {
     user: { id },
+    loading,
   } = useAuthState();
   const { getUser } = useUser();
 
   useEffect(() => {
     (async () => {
-      const { user } = await getUser(id);
-      setUser(user);
+      if (!loading) {
+        const response = await getUser(id, { lastMessages: true, information: true });
+        if (response) {
+          const { user } = response;
+          setInformation(user.info);
+          setLastMessages(user.lastMessages);
+          setUser(user);
+        }
+      }
     })();
-  }, []);
+  }, [userUpdated]);
   return (
     <Wrapper>
-      <ProfileCard user={user} />
+      <ProfileCard width={width} user={user} setUserUpdated={setUserUpdated} />
       <ContentCard>
         <Heading>Information</Heading>
+        <ProfileInformation information={information} width={width} />
       </ContentCard>
       <ContentCard>
         <Heading>Last messages</Heading>
+        <ProfileLastMessages lastMessages={lastMessages} width={width} />
       </ContentCard>
     </Wrapper>
   );

@@ -8,7 +8,6 @@ def destructure(property, *keys):
 
 
 def get_current_datetime() -> datetime:
-    print('DATETIME: ', datetime.now())
     return datetime.now()
 
 
