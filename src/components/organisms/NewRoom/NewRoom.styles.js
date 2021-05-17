@@ -16,6 +16,7 @@ export const Heading = styled.div`
   z-index: 1;
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
 `;
 
@@ -25,7 +26,10 @@ export const Actions = styled.div`
   grid-template-columns: 50% 50%;
   overflow-y: auto;
   position: relative;
-
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 30% 70%;
+  }
   div:first-child {
     justify-self: center;
     margin: 15px 10px;
@@ -38,6 +42,10 @@ export const Participants = styled.div`
   grid-column: 2/3;
   display: grid;
   grid-template-rows: 80px 1fr 50px;
+  @media (max-width: 768px) {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
   button {
     justify-self: end;
     transform: translate(-25px, -20px);

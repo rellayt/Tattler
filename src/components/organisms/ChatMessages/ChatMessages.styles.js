@@ -3,7 +3,7 @@ import { Message as ChannelMessage } from '../ChannelMessages/ChannelMessages.st
 
 export const Wrapper = styled.div`
   grid-column: 2/3;
-  display: grid;
+  display: ${({ active }) => (active ? 'grid' : 'none')};
   grid-template-rows: 70px 1fr;
   border-right: 1px solid ${({ theme: { colors } }) => colors.border};
   box-shadow: 5px 0 9px -4px ${({ theme: { colors } }) => colors.border};

@@ -6,7 +6,7 @@ import { useSnackBarDispatch } from '../../../providers/SnackBar';
 
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
-const AUTO_DISMISS = 1200;
+const AUTO_DISMISS = 1700;
 
 const Snackbar = ({ config: { content, type, open } }) => {
   const dispatch = useSnackBarDispatch();

@@ -38,7 +38,12 @@ export const ButtonsWrapper = styled.div`
 `;
 
 export const IconsWrapper = styled.div`
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+  grid-template-rows: 45px;
+  & > * {
+    justify-self: flex-start;
+  }
   @media (max-width: 768px) {
     display: none;
   }

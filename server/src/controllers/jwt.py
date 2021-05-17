@@ -10,9 +10,7 @@ class TokenRefresh(Resource):
 	def post(self):
 		try:
 			refreshToken = request.cookies.get('refreshToken')
-			print(refreshToken)
 			user_id = decode_token(refreshToken)['sub']
-			print()
 			user = User.get(id=user_id)
 			access_token = create_access_token(identity=user_id, fresh=False)
 

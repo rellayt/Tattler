@@ -11,6 +11,7 @@ import NewRoom from '../components/organisms/NewRoom/NewRoom';
 import { FindFriends } from '../components/organisms/ChatMessages/ChatMessages.styles';
 import { Button } from '../components/atoms/Button/Button';
 import { refreshToken } from '../store/actions/Auth';
+import { useNotifications } from '../hooks/useNotifications';
 
 const Chats = ({ history }) => {
   const [anyChats, setAnyChats] = useState(true);
@@ -18,15 +19,17 @@ const Chats = ({ history }) => {
   const { roomId } = useParams();
 
   const {
-    user: { id },
+    user: { id, name },
     token,
   } = useAuthState();
   const authDispatch = useAuthDispatch();
 
+  const { createNotifications } = useNotifications({ token });
+
   const enabled = Boolean(roomId && id);
 
   const {
-    messages,
+    messagesData,
     messagesLoading,
     typing,
     sendMessage,
@@ -42,9 +45,18 @@ const Chats = ({ history }) => {
     userId: id,
     token,
   });
+
   useEffect(() => {
     (async () => (isTokenRefreshing ? await refreshToken(authDispatch) : null))();
   }, [isTokenRefreshing]);
+
+  useEffect(() => {
+    const { messages } = messagesData;
+    if (messages && messages.length === 1 && roomParticipants.length > 0 && roomId) {
+      const recipients = roomParticipants.map(({ id, name }) => ({ id, name }));
+      createNotifications({ name, id }, recipients, roomId);
+    }
+  }, [messagesData, roomParticipants, roomId]);
 
   useEffect(() => {
     const {
@@ -61,26 +73,22 @@ const Chats = ({ history }) => {
       <ChatsWrapper>
         <ChatOverviewList roomId={roomId} userId={id} socket={socket} activeCreateRoom={newRoom} setAnyChats={setAnyChats} />
         {newRoom && <NewRoom history={history} createRoom={createRoom} />}
-        {roomId && (
-          <>
-            <ChatMessages
-              privateMessagesData={messages}
-              anyChats={anyChats}
-              id={id}
-              active={enabled}
-              roomParticipants={roomParticipants}
-              loading={messagesLoading}
-              typing={typing}
-            />
-            <ChatMessagesAction
-              active={enabled}
-              sendMessage={sendMessage}
-              startTyping={startTyping}
-              endTyping={endTyping}
-              loading={messagesLoading}
-            />
-          </>
-        )}
+        <ChatMessages
+          privateMessagesData={messagesData}
+          anyChats={anyChats}
+          id={id}
+          active={enabled}
+          roomParticipants={roomParticipants}
+          loading={messagesLoading}
+          typing={typing}
+        />
+        <ChatMessagesAction
+          active={enabled}
+          sendMessage={sendMessage}
+          startTyping={startTyping}
+          endTyping={endTyping}
+          loading={messagesLoading}
+        />
         {!anyChats && !enabled && !newRoom && (
           <FindFriends>
             Find users to start conversation <Button onClick={handleClickButton}>Create room</Button>

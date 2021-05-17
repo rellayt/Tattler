@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   grid-row: 2/3;
   background: ${({ theme: { colors } }) => colors.white};
   z-index: 2;
-  display: grid;
+  display: ${({ active }) => (active ? 'grid' : 'none')};
   grid-template-columns: 80% 20%;
   border-top: 1px solid ${({ theme: { colors } }) => colors.border};
   pointer-events: ${({ active }) => (active ? 'auto' : 'none')};

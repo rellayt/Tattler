@@ -5,6 +5,7 @@ export const HeaderIconWrapper = styled.div`
   background-color: ${({ theme: { colors } }) => colors.grassGreen};
   color: ${({ theme: { colors } }) => colors.grey};
   font-size: ${({ theme: { fontSize } }) => fontSize.l};
+  z-index: 6;
   width: 43px;
   height: 43px;
   display: flex;

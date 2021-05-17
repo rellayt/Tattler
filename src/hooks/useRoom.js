@@ -2,10 +2,12 @@ import { post } from 'axios';
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react';
 
+const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/room`;
+
 export const useRoom = ({ enabled = false, roomId, userId, token }) => {
   const [roomParticipants, setRoomParticipants] = useState([]);
 
-  const [messages, setMessages] = useState([]);
+  const [messagesData, setMessagesData] = useState([]);
   const [messagesLoading, setMessagesLoading] = useState(true);
 
   const [typing, setTyping] = useState(false);
@@ -26,7 +28,6 @@ export const useRoom = ({ enabled = false, roomId, userId, token }) => {
     }
   };
 
-  const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/room`;
   const roomSocket = io.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
@@ -48,7 +49,7 @@ export const useRoom = ({ enabled = false, roomId, userId, token }) => {
     roomSocket.on(`ROOM_MESSAGES_${roomId}`, (data) => {
       const { messages } = data;
       if (messages && messages[0]?.userId !== userId) roomSocket.emit('CHECK_NOT_DISPLAYED', { roomId });
-      setMessages(data);
+      setMessagesData(data);
       setMessagesLoading(false);
     });
 
@@ -64,7 +65,7 @@ export const useRoom = ({ enabled = false, roomId, userId, token }) => {
 
   return {
     createRoom,
-    messages,
+    messagesData,
     messagesLoading,
     typing,
     sendMessage,

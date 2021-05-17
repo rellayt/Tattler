@@ -13,7 +13,7 @@ const NewRoom = ({ history, createRoom }) => {
   const handleAdd = async (userId) => {
     const {
       user: { id, roomId, name },
-    } = await getUser(userId);
+    } = await getUser(userId, { commonRoom: true });
     setParticipants([...participants, { id, roomId, name }]);
   };
 
@@ -22,8 +22,10 @@ const NewRoom = ({ history, createRoom }) => {
     if (length === 0) return;
     const users = participants.map(({ id }) => id);
     setBackdropLoading(true);
-
-    if (length === 1 && participants[0].roomId) history.push(`/chats/r/${participants[0].roomId}`);
+    if (length === 1 && participants[0].roomId) {
+      history.push(`/chats/r/${participants[0].roomId}`);
+      return;
+    }
 
     const { id } = await createRoom({ isPrivate: length === 1, users });
     setTimeout(() => {

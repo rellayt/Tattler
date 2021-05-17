@@ -5,7 +5,7 @@ from flask_socketio import emit
 from pony.orm import db_session
 from src.entities.User import User
 from src.middlewares.jwt import jwt_decode_user
-from src.entities.Notification import Notification
+from src.sockets.notifications import get_user_notifications
 
 
 def page(socketio):
@@ -22,6 +22,7 @@ def page(socketio):
 			user_id = request.user['id']
 			user = User.get(id=uuid.UUID(user_id))
 			user.last_logged = datetime.now()
+			emit(f'NOTIFICATIONS_{user_id}', get_user_notifications(user_id))
 		except Exception as e:
 			print(e)
 
@@ -33,6 +34,5 @@ def page(socketio):
 		user = User.get(id=uuid.UUID(user_id))
 		user.last_logged = datetime.now()
 		print(request.user['name'], 'left the page')
-		asd = 123
 
 

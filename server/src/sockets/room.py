@@ -62,8 +62,12 @@ def room(socketio):
 				lambda p: desc(p.created_at)).first()
 			if last_room_message is None:
 				return
+
 			if last_room_message.user.id != uuid.UUID(user_id):
-				last_room_message.displayed = True
+				if not last_room_message.displayed:
+					last_room_message.displayed = True
+					emit_room_messages(room_id)
+
 			emit_overview_to_participants(room_id)
 		except Exception as e:
 			print(e)
@@ -95,6 +99,7 @@ def room(socketio):
 
 	def emit_user_overview(user_id):
 		try:
+			print('overview')
 			user_rooms = select(
 				r for r in Room for p in RoomParticipant if r.id == p.room.id and p.user.id == uuid.UUID(user_id))
 			overview_messages = []

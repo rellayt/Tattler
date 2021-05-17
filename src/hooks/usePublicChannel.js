@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { useAuthDispatch, useAuthState } from '../providers/Auth';
-import { refreshToken } from '../store/actions/Auth';
+
+const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/public_channel`;
 
 export const usePublicChannel = ({ userId, channelId, enabled, onConnected, token }) => {
   const [messages, setMessages] = useState([]);
@@ -9,7 +9,6 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected, toke
   const [typing, setTyping] = useState(false);
   const [isTokenRefreshing, setTokenRefreshing] = useState(false);
 
-  const SOCKET_URL = `${process.env.REACT_APP_WEB_SOCKET_URL}/public_channel`;
   const channelSocket = io.connect(SOCKET_URL, {
     extraHeaders: {
       Authorization: `Bearer ${token}`,
@@ -38,7 +37,10 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected, toke
     });
 
     channelSocket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
-      typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0] !== userId) ? setTyping(true) : setTyping(false);
+      console.log(typingUsers);
+      typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0].userId !== userId)
+        ? setTyping(typingUsers[0])
+        : setTyping(null);
     });
 
     channelSocket.on('disconnect', () => console.log('Disconnected from public channel'));

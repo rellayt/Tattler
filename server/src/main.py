@@ -7,6 +7,7 @@ from flask_restful import Api
 from src.connection import db
 from src.routes import load_routes
 from src.sockets.channels import channels
+from src.sockets.notifications import notifications
 from src.sockets.page import page
 from src.sockets.room import room
 from src.utility.enumConverter import EnumConverter
@@ -27,7 +28,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000/"}}, s
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=7)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=25)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["MEDIA"] = MEDIA_FOLDER
@@ -43,6 +44,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 channels(socketio)
 room(socketio)
 page(socketio)
+notifications(socketio)
 
 if __name__ == '__main__':
 	db.provider.converter_classes.append((Enum, EnumConverter))

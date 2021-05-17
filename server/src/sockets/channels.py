@@ -1,7 +1,10 @@
+import uuid
+
 from flask_socketio import emit
 from flask import request
-from pony.orm import db_session, desc
+from pony.orm import db_session, desc, select
 from src.entities.ChannelMessage import ChannelMessage
+from src.entities.User import User
 from src.helpers import destructure
 from src.middlewares.jwt import jwt_decode_user
 from src.middlewares.messages import channel_message_fields_validation
@@ -53,8 +56,10 @@ def channels(socketio):
 	def start_typing(data):
 		try:
 			[userId, channelId] = destructure(data, 'userId', 'channelId')
-			if userId not in channel_typing_users[channelId - 1]:
-				channel_typing_users[channelId - 1].append(userId)
+			user = User.get(id=uuid.UUID(userId))
+			user_data = {'userId': str(user.id), 'avatar': user.avatar}
+			if user_data not in channel_typing_users[channelId - 1]:
+				channel_typing_users[channelId - 1].append(user_data)
 			emit(f'TYPING_CHANNEL_{channelId}', {'typingUsers': channel_typing_users[channelId - 1]}, broadcast=True)
 		except Exception as e:
 			print(e)
@@ -65,8 +70,10 @@ def channels(socketio):
 	def end_typing(data):
 		try:
 			[userId, channelId] = destructure(data, 'userId', 'channelId')
-			if userId in channel_typing_users[channelId - 1]:
-				channel_typing_users[channelId - 1].remove(userId)
+			user = User.get(id=uuid.UUID(userId))
+			user_data = {'userId': str(user.id), 'avatar': user.avatar}
+			if user_data in channel_typing_users[channelId - 1]:
+				channel_typing_users[channelId - 1].remove(user_data)
 			emit(f'TYPING_CHANNEL_{channelId}', {'typingUsers': channel_typing_users[channelId - 1]}, broadcast=True)
 		except Exception as e:
 			print(e)

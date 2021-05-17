@@ -16,7 +16,6 @@ export const useUser = () => {
       return data;
     } catch (e) {
       const mute = e;
-      console.log('asd');
     }
   };
 
@@ -31,8 +30,6 @@ export const useUser = () => {
       dispatch({ type: 'USER_UPDATED', payload: { user } });
     } catch (e) {
       const mute = e;
-      console.log('asd');
-      // console.error(e);
     }
   };
 

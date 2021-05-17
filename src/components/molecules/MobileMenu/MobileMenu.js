@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Wrapper } from './MobileMenu.styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import NotificationsMobile from '../../organisms/NotificationsMobile/NotificationsMobile';
 
-const MobileMenu = ({ history, handleLogout }) => {
+const MobileMenu = ({ history, handleLogout, notifications }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -14,6 +16,10 @@ const MobileMenu = ({ history, handleLogout }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const openDialog = () => {
+    setOpen(true);
   };
   return (
     <Wrapper>
@@ -29,9 +35,10 @@ const MobileMenu = ({ history, handleLogout }) => {
         >
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>Notifications</MenuItem>
+        <MenuItem onClick={openDialog}>Notifications</MenuItem>
         <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
       </Menu>
+      <NotificationsMobile open={open} onClose={handleClose} />
     </Wrapper>
   );
 };

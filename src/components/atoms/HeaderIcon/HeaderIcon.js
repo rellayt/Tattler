@@ -5,13 +5,21 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { StyledTooltip } from '../Tooltip/Tooltip';
 
 export const HeaderIcon = ({ icon, tooltipContent, action, placement }) => (
-  <ButtonBase onClick={action}>
-    <StyledTooltip title={tooltipContent} enterDelay={100} placement={placement}>
+  <>
+    {tooltipContent ? (
+      <ButtonBase onClick={action}>
+        <StyledTooltip title={tooltipContent} enterDelay={100} placement={placement}>
+          <HeaderIconWrapper>
+            <FontAwesomeIcon icon={icon} />
+          </HeaderIconWrapper>
+        </StyledTooltip>
+      </ButtonBase>
+    ) : (
       <HeaderIconWrapper>
         <FontAwesomeIcon icon={icon} />
       </HeaderIconWrapper>
-    </StyledTooltip>
-  </ButtonBase>
+    )}
+  </>
 );
 
 export default HeaderIcon;

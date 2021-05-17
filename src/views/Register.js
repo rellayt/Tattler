@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Card, Wrapper } from 'components/templates/Auth/Auth.styles';
 import { Button } from 'components/atoms/Button/Button';
-import { Input } from '../../components/atoms/TextField/TextField';
+import { Input } from '../components/atoms/TextField/TextField';
 import { IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useHistory } from 'react-router-dom';
-import { useAuthDispatch, useAuthState } from '../../providers/Auth';
+import { useAuthDispatch, useAuthState } from '../providers/Auth';
 import { useFormik } from 'formik';
-import { RegisterSchema } from '../../schemas/RegisterSchema';
-import { register } from '../../store/actions/Auth';
-import { CircularLoading } from '../../components/atoms/CircularLoading/CircularLoading';
+import { RegisterSchema } from '../schemas/RegisterSchema';
+import { register } from '../store/actions/Auth';
+import { CircularLoading } from '../components/atoms/CircularLoading/CircularLoading';
 import { Heading } from './Login.styles';
 
 const initialValues = {

@@ -7,14 +7,14 @@ import { IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useFormik } from 'formik';
-import { LoginSchema } from '../../schemas/LoginSchema';
-import { useAuthDispatch, useAuthState } from '../../providers/Auth';
-import { signIn } from '../../store/actions/Auth';
+import { LoginSchema } from '../schemas/LoginSchema';
+import { useAuthDispatch } from '../providers/Auth';
+import { signIn } from '../store/actions/Auth';
 import { useHistory } from 'react-router-dom';
-import { CircularLoading } from '../../components/atoms/CircularLoading/CircularLoading';
-import { useSnackBarDispatch } from '../../providers/SnackBar';
-import { OpenSnackBar } from '../../store/actions/SnackBar';
-import { LOGGED_IN } from '../../config/Snackbars';
+import { CircularLoading } from '../components/atoms/CircularLoading/CircularLoading';
+import { useSnackBarDispatch } from '../providers/SnackBar';
+import { OpenSnackBar } from '../store/actions/SnackBar';
+import { LOGGED_IN } from '../config/Snackbars';
 
 const initialValues = {
   login: '',
@@ -23,7 +23,6 @@ const initialValues = {
 const Login = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  // const { loading } = useAuthState();
   const authDispatch = useAuthDispatch();
   const snackBarDispatch = useSnackBarDispatch();
   const { values, handleBlur, touched, errors, handleReset, handleChange, handleSubmit: submit, isValid } = useFormik({
@@ -39,7 +38,7 @@ const Login = () => {
       await signIn(authDispatch, { login, password });
       OpenSnackBar(snackBarDispatch, LOGGED_IN);
       setLoading(false);
-      history.push('/home');
+      history.push('/profile');
       handleReset(null);
     } catch (error) {
       const {

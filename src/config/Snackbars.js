@@ -18,6 +18,11 @@ export const ROOM_DESTROYED = {
   content: 'Room was destroyed',
 };
 
+export const NEW_NOTIFICATION = {
+  type: 'success',
+  content: 'You have a new notification',
+};
+
 export const AUTH_ERROR = {
   type: 'error',
   content: 'Authentication failure',

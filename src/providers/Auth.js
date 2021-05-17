@@ -9,8 +9,8 @@ import { useSnackBarDispatch } from './SnackBar';
 import { OpenSnackBar } from '../store/actions/SnackBar';
 import { AUTH_ERROR } from '../config/Snackbars';
 
-const AuthStateContext = createContext();
-const AuthDispatchContext = createContext();
+const AuthStateContext = createContext({});
+const AuthDispatchContext = createContext({});
 
 axios.interceptors.request.use(
   (request) => {

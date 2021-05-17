@@ -65,7 +65,6 @@ class AuthenticatorController(Resource):
 	def post(self):
 		try:
 			access_token = create_access_token(identity=request.user['id'], fresh=False)
-			print('auth')
 			return {'user': request.user, 'accessToken': access_token}
 		except Exception as e:
 			print(e)

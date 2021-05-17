@@ -22,6 +22,7 @@ export const theme = {
     xl: '27px',
     l: '20px',
     m: '18px',
+    xm: '16px',
     s: '14px',
     xs: '12px',
     xxs: '11px',
@@ -29,6 +30,7 @@ export const theme = {
   boxShadow: {
     auth: '0 2px 11px 3px rgb(0 0 0 / 8%)',
     basic: '0 3px 12px 1px rgb(0 0 0 / 10%)',
+    basicHard: '0 4px 10px 2px rgb(0 0 0 / 18%)',
     sharp: '0 0 1px 1px rgb(0 0 0 / 45%)',
   },
 };

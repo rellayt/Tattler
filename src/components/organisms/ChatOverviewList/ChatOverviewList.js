@@ -7,7 +7,6 @@ import AddIcon from '../../atoms/AddIcon/AddIcon';
 export const ChatOverviewList = ({ roomId: id, userId, socket, activeCreateRoom, setAnyChats }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-
   socket.on(`ROOM_OVERVIEW_${userId}`, ({ overviewMessages }) => {
     setMessages(overviewMessages);
     setAnyChats(overviewMessages.length > 0);

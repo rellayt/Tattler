@@ -7,6 +7,7 @@ import { isToday } from '../../../helpers/isToday';
 import UserAvatar from '../../molecules/UserAvatar/UserAvatar';
 import { getAvatarPath } from '../../../helpers/getAvatarPath';
 import NoAvatar from '../../atoms/NoAvatar/NoAvatar';
+import TypingUser from '../../molecules/TypingUser/TypingUser';
 
 const ChannelMessages = ({ id, messages, loading, setChildFn, isTyping }) => {
   const ref = useRef();
@@ -21,7 +22,7 @@ const ChannelMessages = ({ id, messages, loading, setChildFn, isTyping }) => {
           <PublicMessagesLoading />
         ) : (
           <>
-            {isTyping ? <Typing /> : null}
+            {isTyping ? <TypingUser id={isTyping.userId} avatar={isTyping.avatar} /> : null}
             {messages.map(({ message, created_at, from: { userId, name, avatar } }, index) => {
               return (
                 <MessageWrapper key={index} isMyMessage={id === userId}>

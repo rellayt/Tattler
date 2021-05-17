@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   font-size: ${({ size, theme: { fontSize } }) => fontSize[size]};
   color: ${({ theme: { colors } }) => colors.grassGreen};
+  transform: translateY(2px);
 `;
 export const ProfileWrapper = styled.div`
   font-size: 140px;

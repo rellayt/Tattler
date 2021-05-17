@@ -16,6 +16,7 @@ class Room(db.Entity):
     id = PrimaryKey(str, default=get_room_id)
     type = Required(RoomType)
     room_participant = Set("RoomParticipant")
+    notifications = Set("Notification")
     created_at = Required(datetime, default=datetime.now)
     updated_at = Required(datetime, default=datetime.now)
 

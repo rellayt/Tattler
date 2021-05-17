@@ -34,15 +34,19 @@ const Profile = () => {
   }, [userUpdated]);
   return (
     <Wrapper>
-      <ProfileCard width={width} user={user} setUserUpdated={setUserUpdated} />
-      <ContentCard>
-        <Heading>Information</Heading>
-        <ProfileInformation information={information} width={width} />
-      </ContentCard>
-      <ContentCard>
-        <Heading>Last messages</Heading>
-        <ProfileLastMessages lastMessages={lastMessages} width={width} />
-      </ContentCard>
+      {!!user && (
+        <>
+          <ProfileCard width={width} user={user} setUserUpdated={setUserUpdated} />
+          <ContentCard>
+            <Heading>Information</Heading>
+            <ProfileInformation information={information} width={width} />
+          </ContentCard>
+          <ContentCard>
+            <Heading>Last messages</Heading>
+            <ProfileLastMessages lastMessages={lastMessages} width={width} />
+          </ContentCard>
+        </>
+      )}
     </Wrapper>
   );
 };
