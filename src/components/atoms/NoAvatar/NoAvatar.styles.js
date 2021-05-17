@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   font-size: ${({ size, theme: { fontSize } }) => fontSize[size]};
   color: ${({ theme: { colors } }) => colors.grassGreen};
   transform: translateY(2px);
+  margin-right: 3px;
 `;
 export const ProfileWrapper = styled.div`
   font-size: 140px;

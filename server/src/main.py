@@ -28,7 +28,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000/"}}, s
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=25)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=7)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["MEDIA"] = MEDIA_FOLDER

@@ -40,7 +40,7 @@ const Channels = () => {
         <Heading>
           <Tabs />
           <Title>
-            channel <Highlight>{PublicChannels[+channelId - 1].view}</Highlight>
+            <Highlight>{PublicChannels[+channelId - 1].view}</Highlight>
           </Title>
         </Heading>
         <ChannelMessages id={id} messages={messages} loading={loading} setChildFn={setChildFn} isTyping={isTyping} />

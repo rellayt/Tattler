@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     border-radius: 10px;
     padding: 3px;
     a {
-      grid-template-columns: 22% 54% 15% 9%;
+      grid-template-columns: 22% 51% 18% 9%;
     }
   }
   @media (max-width: 768px) {

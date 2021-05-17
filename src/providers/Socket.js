@@ -1,10 +1,12 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useSnackBarDispatch } from './SnackBar';
 import { OpenSnackBar } from '../store/actions/SnackBar';
 import { NEW_NOTIFICATION, ROOM_DESTROYED } from '../config/Snackbars';
 import { useAuthDispatch, useAuthState } from './Auth';
 import { refreshToken } from '../store/actions/Auth';
+import Group from '@material-ui/icons/Group';
+import Person from '@material-ui/icons/Person';
 
 export const SocketContext = createContext({ notifications: [] });
 
@@ -28,10 +30,20 @@ export const SocketProvider = ({ children }) => {
 
     socket.on(`ROOM_DESTROY_${user.id}`, () => OpenSnackBar(snackBarDispatch, ROOM_DESTROYED));
 
-    socket.on(`NOTIFICATIONS_${user.id}`, ({ notifications }) => setNotifications(notifications));
+    socket.on(`NOTIFICATIONS_${user.id}`, ({ notifications }) => {
+      const processedNotifications = notifications.map(({ group, ...notification }) => ({
+        icon: group ? <Group /> : <Person />,
+        ...notification,
+      }));
+      setNotifications(processedNotifications);
+    });
 
     socket.on(`NEW_NOTIFICATIONS_${user.id}`, ({ notifications }) => {
-      setNotifications(notifications);
+      const processedNotifications = notifications.map(({ group, ...notification }) => ({
+        icon: group ? <Group /> : <Person />,
+        ...notification,
+      }));
+      setNotifications(processedNotifications);
       OpenSnackBar(snackBarDispatch, NEW_NOTIFICATION);
     });
 

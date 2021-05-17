@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import HeaderIcon from '../../atoms/HeaderIcon/HeaderIcon';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import SpeedDial from '@material-ui/lab/SpeedDial';
-import Group from '@material-ui/icons/Group';
-import Person from '@material-ui/icons/Person';
 import { Wrapper } from './Notifications.styles';
 import Badge from '@material-ui/core/Badge';
 import { Notification } from '../../atoms/Notification/Notification';
@@ -23,13 +21,8 @@ const Notifications = ({ notifications: notificationsData, history }) => {
   const { markAsChecked } = useNotifications({ token });
 
   useEffect(() => {
-    console.log(notificationsData);
-    const processedNotifications = notificationsData.map(({ group, ...notification }) => ({
-      icon: group ? <Group /> : <Person />,
-      ...notification,
-    }));
     setUndisplayedNotifications(notificationsData.filter(({ displayed }) => !displayed).length);
-    setNotifications(processedNotifications);
+    setNotifications(notificationsData);
   }, [notificationsData]);
 
   const handleSpeedDialClick = () => setOpen(!open);

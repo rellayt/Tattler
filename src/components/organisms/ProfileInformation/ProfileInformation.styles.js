@@ -15,14 +15,14 @@ export const Wrapper = styled.div`
   @media (max-width: 1024px) {
     grid-column: 1/3;
     grid-row: 2/3;
-    padding: 4px;
+    padding: 6px;
     & > * {
       justify-self: flex-start;
     }
   }
 `;
 export const ContentWrapper = styled.div`
-  padding: 7px 11px;
+  padding: 5px 11px;
   border-radius: 15px;
   text-align: center;
   font-size: ${({ theme: { fontSize } }) => fontSize.l};

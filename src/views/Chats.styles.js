@@ -11,7 +11,7 @@ export const ChatsWrapper = styled.div`
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
   background: ${({ theme: { colors } }) => colors.white};
   @media (max-width: 1440px) {
-    width: 95%;
+    width: 100%;
     margin: 5px 0;
   }
   @media (max-width: 768px) {

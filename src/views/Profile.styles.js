@@ -28,7 +28,6 @@ export const Card = styled.div`
   background: ${({ theme: { colors } }) => colors.white};
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};
   border-radius: 20px;
-  //padding: 25px;
   display: grid;
   grid-template-columns: 50% 50%;
 `;

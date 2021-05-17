@@ -11,6 +11,9 @@ export const Wrapper = styled.div`
   & > * {
     opacity: ${({ active }) => (active ? '1' : '0')};
   }
+  @media (max-width: 480px) {
+    grid-template-columns: 70% 30%;
+  }
 `;
 export const InputWrapper = styled.div`
   grid-column: 1/2;

@@ -33,9 +33,18 @@ export const Title = styled.div`
   font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   margin: auto;
   height: 30px;
+  display: flex;
+  align-items: center;
   color: ${({ theme: { colors } }) => colors.darkGrey};
   text-shadow: 0 0 1px ${({ theme: { colors } }) => colors.lightGrey};
   text-transform: uppercase;
+  &::before {
+    display: block;
+    content: 'Channel';
+    @media (max-width: 500px) {
+      content: '';
+    }
+  }
 `;
 
 export const Highlight = styled.span`

@@ -21,7 +21,7 @@ export const getTimeSince = (value) => {
   }
   interval = seconds / 60;
   if (interval > 1) {
-    return Math.floor(interval) + ' min';
+    return Math.floor(interval) + ' m';
   }
   return '1 min';
 };

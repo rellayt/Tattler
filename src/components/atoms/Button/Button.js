@@ -13,10 +13,13 @@ export const Button = styled(MaterialButton)`
   &:hover {
     background: ${({ theme: { colors } }) => colors.grassGreen};
     color: ${({ theme: { colors } }) => colors.white};
-    -webkit-filter: brightness(0.95);
+    //-webkit-filter: brightness(0.95);
   }
   &:disabled {
-    background: ${({ theme: { colors } }) => colors.error};
+    background-color: ${({ theme: { colors } }) => colors.error} !important;
     color: ${({ theme: { colors } }) => colors.white};
+  }
+  .MuiButton-root:hover.Mui-disabled {
+    background-color: ${({ theme: { colors } }) => colors.error};
   }
 `;

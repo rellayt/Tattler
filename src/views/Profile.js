@@ -9,9 +9,9 @@ import ProfileLastMessages from '../components/organisms/ProfileLastMessages/Pro
 
 const Profile = () => {
   const [user, setUser] = useState({});
-  const [information, setInformation] = useState({});
+  const [information, setInformation] = useState(null);
   const [userUpdated, setUserUpdated] = useState(false);
-  const [lastMessages, setLastMessages] = useState([]);
+  const [lastMessages, setLastMessages] = useState(null);
   const { width } = useWindowDimensions();
   const {
     user: { id },
@@ -39,11 +39,11 @@ const Profile = () => {
           <ProfileCard width={width} user={user} setUserUpdated={setUserUpdated} />
           <ContentCard>
             <Heading>Information</Heading>
-            <ProfileInformation information={information} width={width} />
+            {information && <ProfileInformation information={information} width={width} />}
           </ContentCard>
           <ContentCard>
             <Heading>Last messages</Heading>
-            <ProfileLastMessages lastMessages={lastMessages} width={width} />
+            {lastMessages && <ProfileLastMessages lastMessages={lastMessages} width={width} />}
           </ContentCard>
         </>
       )}

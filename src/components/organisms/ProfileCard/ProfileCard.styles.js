@@ -31,7 +31,6 @@ export const AvatarWrapper = styled.div`
   @media (max-width: 1024px) {
     margin: 7px;
     grid-column: 1/2;
-    //align-items: flex-start;
     justify-content: center;
     .MuiCircularProgress-root {
       color: ${({ theme: { colors } }) => colors.grassGreen};
@@ -125,6 +124,8 @@ export const Name = styled.div`
   align-items: center;
   font-size: ${({ theme: { fontSize } }) => fontSize.xxl};
   @media (max-width: 1024px) {
+    font-size: ${({ theme: { fontSize } }) => fontSize.xl};
+
     justify-self: center;
     grid-column: 1/2;
     grid-row: 1/2;
@@ -136,6 +137,8 @@ export const Email = styled.div`
   align-items: center;
   font-size: ${({ theme: { fontSize } }) => fontSize.xl};
   @media (max-width: 1024px) {
+    font-size: ${({ theme: { fontSize } }) => fontSize.l};
+
     justify-self: center;
     grid-column: 1/2;
     grid-row: 2/3;

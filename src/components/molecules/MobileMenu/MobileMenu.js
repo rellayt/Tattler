@@ -14,16 +14,17 @@ const MobileMenu = ({ history, handleLogout, notifications }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleCloseDialog = () => setOpen(false);
+
+  const handleClose = () => setAnchorEl(null);
 
   const openDialog = () => {
+    setAnchorEl(null);
     setOpen(true);
   };
   return (
     <Wrapper>
-      <IconButton aria-label="delete" onClick={handleClick}>
+      <IconButton onClick={handleClick}>
         <MenuIcon />
       </IconButton>
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
@@ -38,7 +39,7 @@ const MobileMenu = ({ history, handleLogout, notifications }) => {
         <MenuItem onClick={openDialog}>Notifications</MenuItem>
         <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
       </Menu>
-      <NotificationsMobile open={open} onClose={handleClose} />
+      <NotificationsMobile open={open} onClose={handleCloseDialog} notifications={notifications} history={history} />
     </Wrapper>
   );
 };

@@ -99,7 +99,6 @@ def room(socketio):
 
 	def emit_user_overview(user_id):
 		try:
-			print('overview')
 			user_rooms = select(
 				r for r in Room for p in RoomParticipant if r.id == p.room.id and p.user.id == uuid.UUID(user_id))
 			overview_messages = []

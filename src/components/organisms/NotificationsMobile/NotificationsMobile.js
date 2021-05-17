@@ -1,52 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import { useAuthState } from '../../../providers/Auth';
+import { useNotifications } from '../../../hooks/useNotifications';
+import { EmptyNotifications, Message, MobileIcon, MobileIconWrapper, Title } from './NotificationsMobile.styles';
 
-const data = [
-  {
-    displayed: true,
-    group: true,
-    id: 'e2fc50e6-c38d-4594-859f-177eec7021a6',
-    message: 'Test1 has created group with you and test3',
-    roomId: 'tmHvDekKMBEl',
-  },
-  {
-    displayed: true,
-    group: false,
-    id: '35713798-075d-4e25-829d-a2591f9f8430',
-    message: 'Test1 has created room with you',
-    roomId: 'PQwnlwShVnDa',
-  },
-  {
-    displayed: true,
-    group: false,
-    id: '5dda4a00-0be0-47ab-9b8a-d79df38978f9',
-    message: 'Rlt has created room with you',
-    roomId: 'EEgjZiXdoiSF',
-  },
-];
+const NotificationsMobile = ({ onClose, open, notifications: notificationsData, history }) => {
+  const [notifications, setNotifications] = useState([]);
+  const {
+    token,
+    user: { id },
+  } = useAuthState();
+  const { markAsChecked } = useNotifications({ token });
 
-const NotificationsMobile = ({ onClose, selectedValue, open }) => {
-  const handleClose = () => {
-    onClose(selectedValue);
+  const handleClick = ({ roomId, notificationId, displayed }) => {
+    if (!displayed) markAsChecked(notificationId, id);
+    history.push(`/chats/r/${roomId}`);
+    onClose();
   };
 
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
+  useEffect(() => {
+    console.log(notificationsData);
+    setNotifications(notificationsData);
+  }, [notificationsData]);
+
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+    <Dialog onClose={onClose} open={open}>
+      <Title>Notifications</Title>
       <List>
-        {data.map(({ message }) => (
-          <ListItem button>
-            <ListItemAvatar>asddsdsa</ListItemAvatar>
-            {message}
+        {notifications.map(({ message, icon, displayed, roomId, id: notificationId }, index) => (
+          <ListItem button key={index} onClick={() => handleClick({ roomId, displayed, notificationId })}>
+            <MobileIconWrapper>
+              <MobileIcon isViewed={displayed}>{icon}</MobileIcon>
+            </MobileIconWrapper>
+            <Message isViewed={displayed}>{message}</Message>
           </ListItem>
         ))}
+        {notifications.length === 0 && <EmptyNotifications />}
       </List>
     </Dialog>
   );

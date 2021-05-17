@@ -31,6 +31,11 @@ export const MessageWrapper = styled.div`
       margin: 5px;
     }
   }
+  @media (max-width: 480px) {
+    & > * {
+      margin: 6px 1px;
+    }
+  }
 `;
 
 export const Item = styled(ContentWrapper)`
@@ -59,5 +64,5 @@ export const Date = styled(ContentWrapper)`
   background: ${({ theme: { colors } }) => colors.white};
   color: ${({ theme: { colors } }) => colors.grassGreen};
   border: 2px solid ${({ theme: { colors } }) => colors.grassGreen};
-  //max-width: 15%;
+  min-width: 11%;
 `;

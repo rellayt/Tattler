@@ -48,7 +48,7 @@ export const AvatarWrapper = styled.div`
 export const Content = styled.div`
   grid-row: 2/3;
   min-width: min-content;
-  max-width: 42vw;
+  max-width: 33vw;
   text-overflow: ellipsis;
   overflow: hidden;
   position: relative;
