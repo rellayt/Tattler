@@ -5,19 +5,19 @@ import ChannelMessages from '../components/organisms/ChannelMessages/ChannelMess
 import ChannelActions from '../components/organisms/ChannelActions/ChannelActions';
 import { useAuthDispatch, useAuthState } from '../providers/Auth';
 import { usePublicChannel } from '../hooks/usePublicChannel';
-import { useParams } from 'react-router';
 import { PublicChannels } from '../config/PublicChannels';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { Wrapper } from '../components/templates/BasicWrapper';
 import { refreshToken } from '../store/actions/Auth';
 
 const Channels = () => {
   const {
     user: { id },
+    token,
   } = useAuthState();
   const { id: channelId } = useParams();
   const authDispatch = useAuthDispatch();
-  const { token } = useAuthState();
+
   const [childFn, setChildFn] = useState();
   const enabled = Boolean(channelId && id);
   const { sendMessage, messages, loading, typing: isTyping, startTyping, endTyping, isTokenRefreshing } = usePublicChannel({
@@ -38,7 +38,7 @@ const Channels = () => {
     <Wrapper>
       <Channel>
         <Heading>
-          <Tabs />
+          <Tabs channelId={channelId} />
           <Title>
             <Highlight>{PublicChannels[+channelId - 1].view}</Highlight>
           </Title>

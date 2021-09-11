@@ -41,7 +41,7 @@ export const AvatarWrapper = styled.div`
   }
 `;
 
-export const Avatar = styled.div`
+export const AvatarProps = styled.div`
   background: ${({ theme: { colors } }) => colors.grassGreen};
   border-radius: 50%;
   display: flex;
@@ -49,8 +49,7 @@ export const Avatar = styled.div`
   align-items: center;
   color: ${({ theme: { colors } }) => colors.grassGreen};
   font-size: 75px;
-  width: 160px;
-  height: 160px;
+
   z-index: 1;
   position: relative;
   &::after {
@@ -67,6 +66,11 @@ export const Avatar = styled.div`
     height: 94px;
     font-size: 44px;
   }
+`;
+
+export const Avatar = styled(AvatarProps)`
+  width: 160px;
+  height: 160px;
 `;
 
 export const ButtonsWrapper = styled.div`

@@ -37,7 +37,6 @@ export const usePublicChannel = ({ userId, channelId, enabled, onConnected, toke
     });
 
     channelSocket.on(`TYPING_CHANNEL_${channelId}`, ({ typingUsers }) => {
-      console.log(typingUsers);
       typingUsers.length > 1 || (typingUsers.length === 1 && typingUsers[0].userId !== userId)
         ? setTyping(typingUsers[0])
         : setTyping(null);

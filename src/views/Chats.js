@@ -5,7 +5,6 @@ import ChatMessages from '../components/organisms/ChatMessages/ChatMessages';
 import ChatMessagesAction from '../components/organisms/ChatMessagesAction/ChatMessagesAction';
 import { useAuthDispatch, useAuthState } from '../providers/Auth';
 import { Wrapper } from '../components/templates/BasicWrapper';
-import { useParams } from 'react-router';
 import { useRoom } from '../hooks/useRoom';
 import NewRoom from '../components/organisms/NewRoom/NewRoom';
 import { FindFriends } from '../components/organisms/ChatMessages/ChatMessages.styles';
@@ -13,10 +12,14 @@ import { Button } from '../components/atoms/Button/Button';
 import { refreshToken } from '../store/actions/Auth';
 import { useNotifications } from '../hooks/useNotifications';
 
-const Chats = ({ history }) => {
+const Chats = ({
+  history,
+  match: {
+    params: { roomId },
+  },
+}) => {
   const [anyChats, setAnyChats] = useState(true);
   const [newRoom, setNewRoom] = useState(false);
-  const { roomId } = useParams();
 
   const {
     user: { id, name },

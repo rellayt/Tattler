@@ -8,6 +8,8 @@ export const Wrapper = styled.div`
   }
   .MuiTabs-root {
     border-radius: 15px 0 0 0;
+    height: 59px;
+    border-bottom: 1px solid ${({ theme: { colors } }) => colors.border};
   }
   .MuiTab-textColorInherit.Mui-Selected,
   .MuiTouchRipple-root {

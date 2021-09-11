@@ -14,7 +14,7 @@ export const theme = {
     success: '#8FCB81',
     error: '#cb8581',
     warning: '#e1d888',
-    border: 'rgb(225,225,225)',
+    border: 'rgb(235,235,235)',
   },
   fontSize: {
     xxxl: '50px',

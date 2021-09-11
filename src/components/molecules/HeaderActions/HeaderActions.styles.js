@@ -17,6 +17,9 @@ export const Wrapper = styled.div`
       margin: 0 6px;
     }
   }
+  @media (max-width: 1440px) {
+    padding-right: 15px;
+  }
   @media (max-width: 768px) {
     padding-right: 10px;
     grid-column: ${({ isLogged }) => (isLogged ? '3/4' : '1/3')};
@@ -41,6 +44,7 @@ export const IconsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 33.3%);
   grid-template-rows: 45px;
+
   & > * {
     justify-self: flex-start;
   }

@@ -20,5 +20,7 @@ export const Backdrop = styled(BackdropWrapper)`
   align-items: center;
   div:first-child {
     margin: auto 0;
+    top: 0;
+    bottom: 0;
   }
 `;

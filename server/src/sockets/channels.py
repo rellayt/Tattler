@@ -1,8 +1,7 @@
 import uuid
-
 from flask_socketio import emit
 from flask import request
-from pony.orm import db_session, desc, select
+from pony.orm import db_session, desc
 from src.entities.ChannelMessage import ChannelMessage
 from src.entities.User import User
 from src.helpers import destructure
@@ -10,7 +9,6 @@ from src.middlewares.jwt import jwt_decode_user
 from src.middlewares.messages import channel_message_fields_validation
 
 channel_typing_users = [[], [], []]
-
 
 def channels(socketio):
 	@socketio.on_error('/public_channel')

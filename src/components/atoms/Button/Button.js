@@ -13,7 +13,6 @@ export const Button = styled(MaterialButton)`
   &:hover {
     background: ${({ theme: { colors } }) => colors.grassGreen};
     color: ${({ theme: { colors } }) => colors.white};
-    //-webkit-filter: brightness(0.95);
   }
   &:disabled {
     background-color: ${({ theme: { colors } }) => colors.error} !important;

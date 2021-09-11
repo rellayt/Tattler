@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Avatar,
-  AvatarWrapper,
-  ButtonsWrapper,
-  Email,
-  Heading,
-  Item,
-  LastLogin,
-  Name,
-  ProfileContent,
-  Wrapper,
-} from './ProfileCard.styles';
+import { Avatar, AvatarWrapper, ButtonsWrapper, Email, Heading, LastLogin, Name, ProfileContent, Wrapper } from './ProfileCard.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../atoms/Button/Button';

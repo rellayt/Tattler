@@ -5,9 +5,8 @@ import { Tab } from '../../atoms/Tab/Tab';
 import { useParams } from 'react-router/';
 import { Link } from 'react-router-dom';
 
-const PublicChannelTabs = () => {
-  const { id } = useParams();
-  const [activeTab, setActiveTab] = React.useState(id - 1);
+const PublicChannelTabs = ({ channelId }) => {
+  const [activeTab, setActiveTab] = React.useState(channelId - 1);
 
   const handleChange = (e, activeTab) => setActiveTab(activeTab);
   return (

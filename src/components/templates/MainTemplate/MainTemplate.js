@@ -12,5 +12,3 @@ export const MainTemplate = ({ children }) => {
     </Wrapper>
   );
 };
-
-export default MainTemplate;

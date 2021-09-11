@@ -9,6 +9,9 @@ export const Wrapper = styled.div`
   box-shadow: 4px -3px 12px rgba(115, 124, 142, 0.3);
   background: ${({ theme: { colors } }) => colors.white};
   grid-column: 2/4;
+  @media (max-width: 1440px) {
+    grid-template-columns: 20% 52% 28%;
+  }
   @media (max-width: 768px) {
     grid-template-columns: 25% 50% 25%;
   }
@@ -28,10 +31,13 @@ export const StatusInfo = styled.div`
   font-size: ${({ theme }) => theme.fontSize.l};
   align-self: center;
   justify-self: flex-start;
-  margin-left: 15px;
+  margin-left: 25px;
 
   p {
     margin: 5px;
+  }
+  @media (max-width: 1440px) {
+    margin-left: 20px;
   }
   @media (max-width: 768px) {
     margin-left: 10px;

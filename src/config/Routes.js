@@ -5,6 +5,7 @@ import Profile from '../views/Profile';
 import Channels from '../views/Channels';
 import Chats from '../views/Chats';
 import SelectedProfile from '../views/SelectedProfile';
+import VoiceChannel from '../views/VoiceChannel';
 
 const routes = [
   {
@@ -58,6 +59,12 @@ const routes = [
   {
     path: '/chats',
     component: Chats,
+    privateBeforeAuth: true,
+    privateAfterAuth: false,
+  },
+  {
+    path: '/voice_channel',
+    component: VoiceChannel,
     privateBeforeAuth: true,
     privateAfterAuth: false,
   },

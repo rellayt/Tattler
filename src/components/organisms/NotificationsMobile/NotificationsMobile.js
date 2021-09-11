@@ -21,7 +21,6 @@ const NotificationsMobile = ({ onClose, open, notifications: notificationsData, 
   };
 
   useEffect(() => {
-    console.log(notificationsData);
     setNotifications(notificationsData);
   }, [notificationsData]);
 

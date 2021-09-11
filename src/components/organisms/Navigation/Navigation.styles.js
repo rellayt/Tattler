@@ -10,7 +10,6 @@ export const Wrapper = styled.nav`
   box-shadow: -3px 4px 12px rgba(115, 124, 142, 0.3);
   justify-content: flex-start;
   background: ${({ theme: { colors } }) => colors.white};
-  padding: 30px 0;
   grid-row: 1/3;
   grid-column: 1/1;
 `;
@@ -22,6 +21,7 @@ export const Logo = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 30px;
   margin-bottom: 50px;
 `;
 export const Title = styled.h1`
