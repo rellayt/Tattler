@@ -7,9 +7,9 @@ const Navigation = () => (
       <Title />
     </Logo>
     <StyledLink to="/home" text={'Home'} />
-    <StyledLink to="/channel" text={'Channels'} />
-    <StyledLink to="/chats" text={'Rooms'} />
-    <StyledLink to="/voice_channel" text={'VoIP'} />
+    {/*<StyledLink to="/channel" text={'Channels'} />*/}
+    {/*<StyledLink to="/chats" text={'Rooms'} />*/}
+    <StyledLink to="/voice_channel" text={'Channel'} />
   </Wrapper>
 );
 

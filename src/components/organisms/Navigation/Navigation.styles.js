@@ -31,7 +31,7 @@ export const Title = styled.h1`
   margin: 15px 20px 15px auto;
   position: relative;
   &:before {
-    content: 'Tattler';
+    content: 'VOIP';
   }
     @media (max-width: 480px) {
       font-weight: 600;

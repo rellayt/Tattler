@@ -48,7 +48,7 @@ const VoiceChannel = () => {
       <Heading>Voice Channel</Heading>
       <VoiceChannelUsers users={channelParticipants} />
       <ButtonWrapper isSpeaking={audio}>
-        <Button onClick={toggleMicrophone}>{audio ? 'Press to stop talking' : 'Press to start talking'}</Button>
+        <Button onClick={toggleMicrophone}>{!audio ? 'Talk' : 'Stop'}</Button>
       </ButtonWrapper>
     </Wrapper>
   );

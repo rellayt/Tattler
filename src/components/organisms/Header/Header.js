@@ -19,7 +19,7 @@ export const Header = () => {
               <Name>{user.name}</Name>
             </p>
           </StatusInfo>
-          <SearchBar history={history} placeholder={'Find users'} />
+          {/*<SearchBar history={history} placeholder={'Find users'} />*/}
         </>
       )}
       <HeaderActions isLogged={Boolean(user)} />

@@ -39,8 +39,8 @@ const HeaderActions = ({ isLogged }) => {
           ) : (
             <>
               <IconsWrapper>
-                <HeaderIcon icon={faUserAlt} tooltipContent={'Profile'} placement={'bottom'} action={() => history.push('/profile')} />
-                <Notifications notifications={notifications} history={history} />
+                {/*<HeaderIcon icon={faUserAlt} tooltipContent={'Profile'} placement={'bottom'} action={() => history.push('/profile')} />*/}
+                {/*<Notifications notifications={notifications} history={history} />*/}
                 <HeaderIcon icon={faSignOutAlt} tooltipContent={'Logout'} placement={'bottom'} action={handleLogout} />
               </IconsWrapper>
               <MobileWrapper>

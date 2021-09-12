@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+export const Tip = styled.div`
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1/3;
+  grid-row: 1/3;
+`;
+
 export const Card = styled.div`
   background: ${({ theme: { colors } }) => colors.white};
   box-shadow: ${({ theme: { boxShadow } }) => boxShadow.basic};

@@ -1,8 +1,6 @@
 from typing import List
-
 from flask import request
 from flask_socketio import emit
-from pony.orm import db_session
 from src.helpers import destructure
 from src.middlewares.jwt import jwt_decode_user
 from src.models.VoiceChannelUser import VoiceChannelUser
@@ -27,9 +25,9 @@ def voice_channel(socketio):
 				participant = VoiceChannelUser(id, name, avatar)
 				voice_channel_participants.append(participant)
 				print(name, 'joined voice channel')
-				emit_voice_channel_participants()
 			else:
 				print(name, 'is already inside voice channel')
+			emit_voice_channel_participants()
 		except Exception as e:
 			print(e)
 

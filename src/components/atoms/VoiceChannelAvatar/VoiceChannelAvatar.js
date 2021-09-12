@@ -19,7 +19,4 @@ const VoiceChannelAvatar = ({ id, avatar, isSpeaking }) => {
   );
 };
 
-VoiceChannelAvatar.propTypes = {};
-
 export default VoiceChannelAvatar;
-//
